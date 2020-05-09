@@ -1,0 +1,16 @@
+{
+    "name": "texboy/wjcrypto",
+    "description": "WJCrypto",
+    "require": {
+        "pecee/simple-router":"*"
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wjcrypto\\": "app/code",
+            "Bootstrap\\": "app/bootstrap"
+        }
+    }
+}
