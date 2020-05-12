@@ -9,8 +9,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Wjcrypto\\": "app/code",
-            "Bootstrap\\": "app/bootstrap"
+            "Wjcrypto\\": "app/code/Wjcrypto/",
+            "Bootstrap\\": "app/bootstrap/"
         }
     }
 }

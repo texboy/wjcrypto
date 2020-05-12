@@ -16,6 +16,7 @@ class ApiController implements IResourceController{
      */
     public function index(): ?string
     {
+        $inputHandler = input();
         return response()->json([
             'method' => 'index'
         ]);
@@ -28,7 +29,11 @@ class ApiController implements IResourceController{
 
     public function store(): ?string
     {
-        // TODO: Implement store() method.
+        $inputHandler = input();
+        $data = $inputHandler->all();
+        return response()->json([
+            'method' => 'index'
+        ]);
     }
 
     public function create(): ?string
@@ -38,7 +43,11 @@ class ApiController implements IResourceController{
 
     public function edit($id): ?string
     {
-        // TODO: Implement edit() method.
+        $inputHandler = input();
+        $data = $inputHandler->all();
+        return response()->json([
+            'method' => 'index'
+        ]);
     }
 
     public function update($id): ?string

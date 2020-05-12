@@ -22,12 +22,6 @@ class Bootstrap {
      */
     public static function run(): void
     {
-        // Starting router helpers
-        require_once __DIR__.'/../../vendor/pecee/simple-router/helpers.php';
-
-        // Loading routes file
-        require_once __DIR__.'/../../routes/routes.php';
-
         //Starting dependency injection
         $container = (new \DI\ContainerBuilder())
             ->useAutowiring(true)
