@@ -2,7 +2,9 @@
     "name": "texboy/wjcrypto",
     "description": "WJCrypto",
     "require": {
-        "pecee/simple-router":"*"
+        "pecee/simple-router":"*",
+        "illuminate/database": "^7.11",
+        "illuminate/encryption": "^7.11"
     },
     "config": {
         "preferred-install": "dist"

@@ -9,6 +9,7 @@ class Index
 {
     public function notFound(): string
     {
+        return print_r(getenv());
         return 'Page not found';
     }
 }

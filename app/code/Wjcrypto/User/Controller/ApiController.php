@@ -7,9 +7,25 @@
 namespace Wjcrypto\User\Controller;
 
 use Pecee\Controllers\IResourceController;
+use Wjcrypto\User\Model\User;
 
 
 class ApiController implements IResourceController{
+
+    /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * ApiController constructor.
+     * @param User $user
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
 
     /**
      * @return string|null
@@ -31,6 +47,10 @@ class ApiController implements IResourceController{
     {
         $inputHandler = input();
         $data = $inputHandler->all();
+        $this->user->username = $data['username'];
+        $this->user->password = $data['password'];
+        $this->user->save();
+
         return response()->json([
             'method' => 'index'
         ]);

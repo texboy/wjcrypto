@@ -2,4 +2,5 @@
 /vendor/*
 *.log
 .idea/*
-
+/.idea
+env.php
