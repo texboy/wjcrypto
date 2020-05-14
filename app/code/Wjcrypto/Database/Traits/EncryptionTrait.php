@@ -3,11 +3,11 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace App\Traits;
+namespace Wjcrypto\Database\Traits;
 
 use Illuminate\Encryption\Encrypter;
 
-trait Encryptable
+trait EncryptionTrait
 {
 
     /**

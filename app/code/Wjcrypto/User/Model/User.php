@@ -5,36 +5,28 @@
 
 namespace Wjcrypto\User\Model;
 
-use App\Traits\Encryptable;
 use Illuminate\Database\Eloquent\Model;
+use Wjcrypto\Database\Traits\EncryptionTrait;
 
 class User extends Model
 
 {
-    Use Encryptable;
+    Use EncryptionTrait;
 
     protected $table = 'user';
     protected $primaryKey = 'user_id';
 
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $encryptable = [
+        'username', 'password'
+    ];
 
     protected $fillable = [
         'username', 'password'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-
     protected $hidden = [
         'password'
+
     ];
 
 

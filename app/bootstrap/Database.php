@@ -30,11 +30,11 @@ class Database {
     public function start(): void
     {
         $this->eloquentManager->addConnection([
-            "driver" => "mysql",
-            "host" =>"db",
-            "database" => "wjcrypto",
-            "username" => "root",
-            "password" => "100senha"
+            "driver" => env('DB_DRIVER'),
+            "host" => env('DB_HOST'),
+            "database" => env('DB_NAME'),
+            "username" => env('DB_USERNAME'),
+            "password" => env('DB_PASSWORD')
         ]);
 
         //Make this Eloquent manager instance available globally.
