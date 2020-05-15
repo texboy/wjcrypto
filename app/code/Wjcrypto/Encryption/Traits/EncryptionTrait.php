@@ -3,26 +3,13 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\Database\Traits;
+namespace Wjcrypto\Encryption\Traits;
 
-use Illuminate\Encryption\Encrypter;
+use Wjcrypto\Encryption\Model\Encrypter;
+use Wjcrypto\Encryption\Model\Encryption;
 
 trait EncryptionTrait
 {
-
-    /**
-     * @var Encrypter
-     */
-    private $encrypter;
-
-    /**
-     * Encryptable constructor.
-     * @param Encrypter $encrypter
-     */
-    public function __construct(Encrypter $encrypter)
-    {
-        $this->encrypter = $encrypter;
-    }
 
     /**
      * @param  $key
@@ -32,7 +19,7 @@ trait EncryptionTrait
     {
         $value = parent::getAttribute($key);
         if (in_array($key, $this->encryptable) && $value !== '') {
-            $value = $this->encrypter->decrypt($value);
+            $value = Encryption::getEncrypter()->decrypt($value);
         }
         return $value;
     }
@@ -45,7 +32,7 @@ trait EncryptionTrait
     public function setAttribute($key, $value)
     {
         if (in_array($key, $this->encryptable)) {
-            $value = $this->encrypter->encrypt($value);
+            $value = Encryption::getEncrypter()->encrypt($value);
         }
         return parent::setAttribute($key, $value);
     }
@@ -58,7 +45,7 @@ trait EncryptionTrait
         $attributes = parent::attributesToArray();
         foreach ($this->encryptable as $key) {
             if (isset($attributes[$key])) {
-                $attributes[$key] = $this->encrypter->decrypt($attributes[$key]);
+                $attributes[$key] =  Encryption::getEncrypter()->decrypt($attributes[$key]);
             }
         }
         return $attributes;

@@ -17,7 +17,8 @@
 - [x] Create Index
 - [x] Create Bootstrap 
 - [x] Add ORM (illuminate/database)
-- [ ] Add env file
-- [ ] Add DB encryption
-- [ ] Create migrations for the DB
+- [x] Add env file
+- [x] Add DB encryption
 - [x] Create script that runs all the migrations
+- [ ] Add unit testing
+

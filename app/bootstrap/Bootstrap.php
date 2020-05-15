@@ -3,19 +3,15 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-declare(strict_types = 1);
-
 namespace Bootstrap;
 
 use Dotenv\Dotenv;
 use Exception;
-use Illuminate\Encryption\Encrypter;
-use Illuminate\Encryption\EncryptionServiceProvider;
 use Pecee\Http\Middleware\Exceptions\TokenMismatchException;
 use Pecee\SimpleRouter\Exceptions\HttpException;
 use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
 use Pecee\SimpleRouter\SimpleRouter;
-use Bootstrap\Database;
+use Wjcrypto\Encryption\Model\Encryption;
 
 class Bootstrap {
 
@@ -47,6 +43,12 @@ class Bootstrap {
 
         /** @var $database Database */
         $database->start();
+
+        //Starting encryption singleton
+        $encrypter = $container->get(Encryption::class);
+
+        /** @var $encrypter Encryption */
+        $encrypter->setEncrypterAsGlobal();
 
         // Starting routes
         if ($allowRouter){

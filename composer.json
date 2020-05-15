@@ -16,5 +16,8 @@
             "Wjcrypto\\": "app/code/Wjcrypto/",
             "Bootstrap\\": "app/bootstrap/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
     }
 }

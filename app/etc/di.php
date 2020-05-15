@@ -4,6 +4,6 @@
  */
 
 return [
-    'Illuminate\Encryption\Encrypter' => \DI\autowire()
-        ->constructor(\DI\env('APP_KEY'),'AES-256-CBC')
+    'Illuminate\Encryption\Encrypter' =>
+        \DI\autowire()->constructor(getenv('APP_KEY'), 'AES-256-CBC')
 ];

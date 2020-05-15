@@ -32,15 +32,18 @@ class ApiController implements IResourceController{
      */
     public function index(): ?string
     {
-        $inputHandler = input();
+        $user = User::all()->toArray();
         return response()->json([
-            'method' => 'index'
+            $user
         ]);
     }
 
     public function show($id): ?string
     {
-        // TODO: Implement show() method.
+        $user = User::find($id)->toArray();
+        return response()->json([
+            $user
+        ]);
     }
 
     public function store(): ?string
@@ -63,11 +66,7 @@ class ApiController implements IResourceController{
 
     public function edit($id): ?string
     {
-        $inputHandler = input();
-        $data = $inputHandler->all();
-        return response()->json([
-            'method' => 'index'
-        ]);
+       //TODO
     }
 
     public function update($id): ?string

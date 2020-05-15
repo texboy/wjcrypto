@@ -6,7 +6,7 @@
 namespace Wjcrypto\User\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Wjcrypto\Database\Traits\EncryptionTrait;
+use Wjcrypto\Encryption\Traits\EncryptionTrait;
 
 class User extends Model
 
@@ -26,7 +26,6 @@ class User extends Model
 
     protected $hidden = [
         'password'
-
     ];
 
 
