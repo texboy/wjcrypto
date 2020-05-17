@@ -7,8 +7,10 @@ use Illuminate\Database\Capsule\Manager;
 
 Manager::schema()->create('customer', function ($table) {
     $table->id('customer_id');
-    $table->text('type')->comment('0 for individual, 1 fo legal entity');
     $table->unsignedBigInteger('user_id');
     $table->foreign('user_id')->references('user_id')->on('user');
+    $table->unsignedBigInteger('customer_type_id');
+    $table->foreign('customer_type_id')->references('customer_type_id')->on('customer_type');
     $table->timestamps();
 });
+

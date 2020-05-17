@@ -10,7 +10,7 @@ require __DIR__.'/vendor/autoload.php';
 \Bootstrap\Bootstrap::run(false);
 array_shift($argv);
 try{
-    if(count($argv)){
+    if(count($argv)) {
         foreach ($argv as $filename){
             require_once 'migrations/' . $filename;
         }

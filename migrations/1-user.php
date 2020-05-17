@@ -11,3 +11,10 @@ Manager::schema()->create('user', function ($table) {
     $table->text('password');
     $table->timestamps();
 });
+
+Manager::table('user')->insert(
+    array(
+        'username' => 'admin',
+        'password' => \Wjcrypto\Encryption\Model\Encryption::getEncrypter()->encrypt('admin')
+    )
+);

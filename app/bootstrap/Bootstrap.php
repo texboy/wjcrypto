@@ -13,6 +13,10 @@ use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
 use Pecee\SimpleRouter\SimpleRouter;
 use Wjcrypto\Encryption\Model\Encryption;
 
+/**
+ * Class Bootstrap
+ * @package Bootstrap
+ */
 class Bootstrap {
 
     /**
@@ -41,13 +45,13 @@ class Bootstrap {
         //Starting database
         $database = $container->get(Database::class);
 
-        /** @var $database Database */
+        /** @var Database $database */
         $database->start();
 
         //Starting encryption singleton
         $encrypter = $container->get(Encryption::class);
 
-        /** @var $encrypter Encryption */
+        /** @var Encryption $encrypter */
         $encrypter->setEncrypterAsGlobal();
 
         // Starting routes

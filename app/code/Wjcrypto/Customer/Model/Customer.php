@@ -3,7 +3,7 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\User\Model;
+namespace Wjcrypto\Customer\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,19 +13,19 @@ use Wjcrypto\Encryption\Traits\EncryptionTrait;
  * Class Customer
  * @package Wjcrypto\Customer\Model
  */
-class User extends Model
+class Customer extends Model
 {
     Use EncryptionTrait;
 
     /**
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'customer';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'customer_id';
 
     /**
      * @var string[]
@@ -53,6 +53,6 @@ class User extends Model
      */
     public function customer(): HasOne
     {
-        return $this->hasOne('Wjcrypto/Customer/Model/Customer');
+        return $this->hasOne('customer');
     }
 }

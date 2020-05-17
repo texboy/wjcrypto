@@ -3,13 +3,14 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-declare(strict_types=1);
-
 namespace Bootstrap;
 
 use Illuminate\Database\Capsule\Manager;
-use Illuminate\Encryption\Encrypter;
 
+/**
+ * Class Database
+ * @package Bootstrap
+ */
 class Database {
 
     /**

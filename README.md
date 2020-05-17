@@ -22,3 +22,24 @@
 - [x] Create script that runs all the migrations
 - [ ] Add unit testing
 
+### Database:
+
+- Create document and transaction type
+- Populate with types of each table
+-
+
+
+
+### TESTS
+
+### Code coverage ignore
+````
+/**
+ * Class Descritpion
+ *
+ * @category PHP
+ * @package  Vendor\package\class
+ 
+ * @codeCoverageIgnore
+ */
+````

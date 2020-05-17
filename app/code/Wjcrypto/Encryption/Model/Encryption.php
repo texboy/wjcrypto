@@ -7,6 +7,10 @@ namespace Wjcrypto\Encryption\Model;
 
 use Illuminate\Encryption\Encrypter;
 
+/**
+ * Class Encryption
+ * @package Wjcrypto\Encryption\Model
+ */
 class Encryption {
 
     /**
@@ -32,7 +36,7 @@ class Encryption {
     /**
      * @return Encrypter
      */
-    public static function getEncrypter(): \Illuminate\Encryption\Encrypter
+    public static function getEncrypter(): Encrypter
     {
         return self::$instance;
     }

@@ -3,13 +3,15 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-
 namespace Wjcrypto\User\Controller;
 
 use Pecee\Controllers\IResourceController;
 use Wjcrypto\User\Model\User;
 
-
+/**
+ * Class ApiController
+ * @package Wjcrypto\User\Controller
+ */
 class ApiController implements IResourceController{
 
     /**
@@ -18,8 +20,7 @@ class ApiController implements IResourceController{
     private $user;
 
     /**
-     * ApiController constructor.
-     * @param User $user
+     * @inheritDoc
      */
     public function __construct(User $user)
     {
@@ -28,16 +29,19 @@ class ApiController implements IResourceController{
 
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function index(): ?string
     {
         $user = User::all()->toArray();
         return response()->json([
-            $user
+           "users" => $user
         ]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function show($id): ?string
     {
         $user = User::find($id)->toArray();
@@ -46,6 +50,9 @@ class ApiController implements IResourceController{
         ]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function store(): ?string
     {
         $inputHandler = input();
@@ -59,21 +66,33 @@ class ApiController implements IResourceController{
         ]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function create(): ?string
     {
         // TODO: Implement create() method.
     }
 
+    /**
+     * @inheritDoc
+     */
     public function edit($id): ?string
     {
        //TODO
     }
 
+    /**
+     * @inheritDoc
+     */
     public function update($id): ?string
     {
         // TODO: Implement update() method.
     }
 
+    /**
+     * @inheritDoc
+     */
     public function destroy($id): ?string
     {
         // TODO: Implement destroy() method.
