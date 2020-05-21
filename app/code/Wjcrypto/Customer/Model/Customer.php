@@ -6,7 +6,8 @@
 namespace Wjcrypto\Customer\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Wjcrypto\Encryption\Traits\EncryptionTrait;
 
 /**
@@ -15,7 +16,7 @@ use Wjcrypto\Encryption\Traits\EncryptionTrait;
  */
 class Customer extends Model
 {
-    Use EncryptionTrait;
+    use EncryptionTrait;
 
     /**
      * @var string
@@ -31,28 +32,44 @@ class Customer extends Model
      * @var string[]
      */
     protected $encryptable = [
-        'username', 'password'
+        'name'
     ];
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'username', 'password'
+        'name', 'user_id','customer_type_id'
     ];
 
     /**
      * @var string[]
      */
     protected $hidden = [
-        'password'
+
     ];
 
     /**
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function customer(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne('customer');
+        return $this->belongsTo('Wjcrypto\User\Model\User', 'user_id', 'user_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function customerType(): BelongsTo
+    {
+        return $this->belongsTo('Wjcrypto\Customer\Model\CustomerType', 'customer_type_id', 'customer_type_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function documents(): HasMany
+    {
+        return $this->hasMany('Wjcrypto\Document\Model\Document', 'customer_id', 'customer_id');
     }
 }

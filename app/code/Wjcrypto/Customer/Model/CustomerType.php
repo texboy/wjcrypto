@@ -3,56 +3,57 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\User\Model;
+namespace Wjcrypto\Customer\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Wjcrypto\Encryption\Traits\EncryptionTrait;
 
 /**
- * Class Customer
+ * Class CustomerType
  * @package Wjcrypto\Customer\Model
  */
-class User extends Model
+class CustomerType extends Model
 {
     use EncryptionTrait;
 
     /**
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'customer_type';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'customer_type_id';
 
     /**
      * @var string[]
      */
     protected $encryptable = [
-        'username', 'password'
     ];
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'username', 'password'
+        'name'
     ];
 
     /**
      * @var string[]
      */
     protected $hidden = [
-        'password'
+
     ];
 
     /**
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function customer(): HasOne
+    public function customer(): HasMany
     {
-        return $this->hasOne('Wjcrypto/Customer/Model/Customer', 'user_id', "user_id");
+        return $this->hasMany('Wjcrypto\Cusotmer\Model\Customer', 'customer_type_id');
     }
 }

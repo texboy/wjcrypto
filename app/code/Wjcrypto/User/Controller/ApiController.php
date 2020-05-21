@@ -7,6 +7,7 @@ namespace Wjcrypto\User\Controller;
 
 use Pecee\Controllers\IResourceController;
 use Wjcrypto\User\Model\User;
+use Wjcrypto\User\Model\UserRepositoryInterface;
 
 /**
  * Class ApiController
@@ -20,11 +21,21 @@ class ApiController implements IResourceController{
     private $user;
 
     /**
-     * @inheritDoc
+     * @var UserRepositoryInterface
      */
-    public function __construct(User $user)
-    {
+    private $userRepository;
+
+    /**
+     * ApiController constructor.
+     * @param User $user
+     * @param UserRepositoryInterface $userRepository
+     */
+    public function __construct(
+        User $user,
+        UserRepositoryInterface $userRepository
+    ) {
         $this->user = $user;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -33,9 +44,8 @@ class ApiController implements IResourceController{
      */
     public function index(): ?string
     {
-        $user = User::all()->toArray();
         return response()->json([
-           "users" => $user
+           "users" => $this->userRepository->getAllUsers()->toArray()
         ]);
     }
 
@@ -44,9 +54,9 @@ class ApiController implements IResourceController{
      */
     public function show($id): ?string
     {
-        $user = User::find($id)->toArray();
+        $user = $this->userRepository->getUser($id);
         return response()->json([
-            $user
+            $user->toArray()
         ]);
     }
 
@@ -55,15 +65,15 @@ class ApiController implements IResourceController{
      */
     public function store(): ?string
     {
-        $inputHandler = input();
-        $data = $inputHandler->all();
-        $this->user->username = $data['username'];
-        $this->user->password = $data['password'];
-        $this->user->save();
-
+        $test = input()->all();
+        $result = $this->userRepository->updateUser(12, input()->all()['user']);
         return response()->json([
-            'method' => 'index'
+            $result ? "Success" : "Fail"
         ]);
+//
+//        return response()->json([
+//            'user_id' =>  $this->userRepository->saveUser(input()->all()['user'])
+//        ]);
     }
 
     /**
@@ -79,7 +89,7 @@ class ApiController implements IResourceController{
      */
     public function edit($id): ?string
     {
-       //TODO
+
     }
 
     /**
@@ -87,7 +97,11 @@ class ApiController implements IResourceController{
      */
     public function update($id): ?string
     {
-        // TODO: Implement update() method.
+        $test = input()->all();
+        $result = $this->userRepository->updateUser($id, input()->all()['user']);
+        return response()->json([
+            $result ? "Success" : "Fail"
+        ]);
     }
 
     /**
@@ -96,5 +110,12 @@ class ApiController implements IResourceController{
     public function destroy($id): ?string
     {
         // TODO: Implement destroy() method.
+    }
+
+    public function test(): ?string
+    {
+        return response()->json([
+            'method' => 'test'
+        ]);
     }
 }

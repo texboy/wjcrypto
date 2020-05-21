@@ -17,8 +17,8 @@ use Wjcrypto\Encryption\Model\Encryption;
  * Class Bootstrap
  * @package Bootstrap
  */
-class Bootstrap {
-
+class Bootstrap
+{
     /**
      * Initializing routes, helpers and dependency injection
      *
@@ -38,7 +38,7 @@ class Bootstrap {
 
         //Starting dependency injection
         $container = (new \DI\ContainerBuilder())
-            ->addDefinitions(__DIR__.'/../etc/di.php')
+            ->addDefinitions(__DIR__ . '/../etc/di.php')
             ->useAutowiring(true)
             ->build();
 
@@ -55,7 +55,7 @@ class Bootstrap {
         $encrypter->setEncrypterAsGlobal();
 
         // Starting routes
-        if ($allowRouter){
+        if ($allowRouter) {
             //Enabling di on simple router
             SimpleRouter::enableDependencyInjection($container);
             SimpleRouter::start();

@@ -11,15 +11,24 @@ use Pecee\SimpleRouter\SimpleRouter as Router;
 
 Router::csrfVerifier(new \Wjcrypto\Router\Middleware\CsrfVerifier());
 
-// API
-
 
 Router::group([
     'namespace' => '\Wjcrypto\Router\Controller',
     'exceptionHandler' =>\Wjcrypto\Router\Handlers\CustomExceptionHandler::class,
+    'middleware' =>  \Wjcrypto\Router\Middleware\Logger::class
 ], function () {
 
-    //Crude way to keep adding routes.
-    require_once __DIR__.'/api.php';
-
+    Router::get('/auth', function () {
+        return 'Auth failed!';
+    });
+    Router::group([
+        'namespace' => '',
+        'prefix' => '/api',
+        'middleware' =>  \Wjcrypto\Auth\Middleware\ApiAuth::class
+    ], function () {
+        //Crude way to keep adding routes.
+        foreach (glob(__DIR__ . "/api/*") as $filename) {
+            require_once $filename;
+        }
+    });
 });
