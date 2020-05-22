@@ -66,9 +66,10 @@ class ApiController implements IResourceController{
     public function store(): ?string
     {
         $test = input()->all();
-        $result = $this->userRepository->updateUser(12, input()->all()['user']);
+        $user = input()->all()['user'];
+        $result = $this->userRepository->saveUser( $user );
         return response()->json([
-            $result ? "Success" : "Fail"
+            $result
         ]);
 //
 //        return response()->json([

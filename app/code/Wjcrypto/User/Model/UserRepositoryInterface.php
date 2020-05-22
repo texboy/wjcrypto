@@ -5,6 +5,7 @@
 
 namespace Wjcrypto\User\Model;
 
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -39,7 +40,8 @@ interface UserRepositoryInterface
 
     /**
      * @param int $id
-     * @return void
+     * @throws Exception
+     * @return bool
      */
-    public function deleteUser(int $id): void;
+    public function deleteUser(int $id): bool;
 }

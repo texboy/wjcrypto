@@ -35,10 +35,7 @@ class UserRepository implements UserRepositoryInterface
      */
     public function saveUser(array $userData): int
     {
-        return User::create([
-            'username' => $userData['username'],
-            'password' => $userData['password']
-        ])->user_id;
+        return User::create($userData)->user_id;
     }
 
     /**
@@ -46,16 +43,14 @@ class UserRepository implements UserRepositoryInterface
      */
     public function updateUser(int $id, array $userData): bool
     {
-         return User::find($id)->update([
-             $userData
-         ]);
+         return User::find($id)->update($userData);
     }
 
     /**
      * @inheritDoc
      */
-    public function deleteUser(int $id): void
+    public function deleteUser(int $id): bool
     {
-        // TODO: Implement deleteUser() method.
+        return User::find($id)->delete();
     }
 }
