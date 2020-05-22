@@ -9,13 +9,12 @@
 
 use Pecee\SimpleRouter\SimpleRouter as Router;
 
-Router::csrfVerifier(new \Wjcrypto\Router\Middleware\CsrfVerifier());
+Router::csrfVerifier(new \Core\Middleware\CsrfVerifier());
 
 
 Router::group([
-    'namespace' => '\Wjcrypto\Router\Controller',
-    'exceptionHandler' =>\Wjcrypto\Router\Handlers\CustomExceptionHandler::class,
-    'middleware' =>  \Wjcrypto\Router\Middleware\Logger::class
+    'exceptionHandler' => \Core\Handlers\CustomExceptionHandler::class,
+    'middleware' =>  \Core\Middleware\Logger::class
 ], function () {
 
     Router::get('/auth', function () {

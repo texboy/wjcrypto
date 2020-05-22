@@ -15,7 +15,8 @@
     "autoload": {
         "psr-4": {
             "Wjcrypto\\": "app/code/Wjcrypto/",
-            "Bootstrap\\": "app/bootstrap/"
+            "Bootstrap\\": "app/bootstrap/",
+            "Core\\": "app/code/Core/"
         }
     },
     "require-dev": {

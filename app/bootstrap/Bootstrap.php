@@ -11,7 +11,7 @@ use Pecee\Http\Middleware\Exceptions\TokenMismatchException;
 use Pecee\SimpleRouter\Exceptions\HttpException;
 use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
 use Pecee\SimpleRouter\SimpleRouter;
-use Wjcrypto\Encryption\Model\Encryption;
+use Core\Model\Encryption;
 
 /**
  * Class Bootstrap

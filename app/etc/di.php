@@ -3,7 +3,6 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-use Psr\Container\ContainerInterface;
 use Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\CustomerValidator;
 use Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\DocumentValidator;
 use Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\UserValidator;
@@ -37,7 +36,8 @@ return [
     'CoreStreamHandler' =>
         \DI\autowire(Monolog\Handler\StreamHandler::class)
             ->constructor(__DIR__ . '/../../var/log/core.log', Monolog\Logger::INFO),
-    'Wjcrypto\Router\Model\CoreLogger' =>
+
+    \Core\Model\CoreLogger::class =>
         \DI\autowire()
             ->constructor('general')
             ->method('pushHandler', DI\get('CoreStreamHandler'))
@@ -54,8 +54,8 @@ return [
             ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
 
     /*____________BankAccount________________*/
-    \Wjcrypto\BankAccount\Model\Services\RegisterProcessorInterface::class =>
-        \DI\autowire(\Wjcrypto\BankAccount\Model\Services\RegisterProcessor::class),
+    \Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessorInterface::class =>
+        \DI\autowire(\Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessor::class),
 
     \Wjcrypto\BankAccountRegister\Model\Services\RegisterSaveInterface::class =>
         \DI\autowire(\Wjcrypto\BankAccountRegister\Model\Services\RegisterSave::class),

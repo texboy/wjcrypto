@@ -9,12 +9,9 @@
 
 use Pecee\SimpleRouter\SimpleRouter as Router;
 
-Router::csrfVerifier(new \Wjcrypto\Router\Middleware\CsrfVerifier());
-
-
 Router::group([
     'namespace' => '\Wjcrypto\BankAccountRegister\Controller'
 ], function () {
     Router::post('/bank/account/register', 'RegisterController@registerAccount')
-        ->name('BankAccount');
+        ->name('BankAccountRegister');
 });

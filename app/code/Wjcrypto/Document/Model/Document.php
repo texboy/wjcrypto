@@ -7,7 +7,7 @@ namespace Wjcrypto\Document\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Wjcrypto\Encryption\Traits\EncryptionTrait;
+use Core\Traits\EncryptionTrait;
 
 /**
  * Class Customer
