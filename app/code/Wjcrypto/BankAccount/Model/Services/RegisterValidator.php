@@ -3,14 +3,14 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services;
+namespace Wjcrypto\BankAccount\Model\Services;
 
 use Pecee\Http\Request;
 use Wjcrypto\Core\Model\ValidationResult;
 
 /**
  * Class RegisterValidator
- * @package Wjcrypto\BankAccountRegister\Model\Services
+ * @package Wjcrypto\BankAccount\Model\Services
  */
 class RegisterValidator implements RegisterValidatorInterface
 {

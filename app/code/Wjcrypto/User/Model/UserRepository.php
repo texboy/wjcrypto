@@ -5,6 +5,7 @@
 
 namespace Wjcrypto\User\Model;
 
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -52,5 +53,10 @@ class UserRepository implements UserRepositoryInterface
     public function deleteUser(int $id): bool
     {
         return User::find($id)->delete();
+    }
+
+    public function getDatabaseConnection(): ConnectionInterface
+    {
+        return User::getConnectionResolver()->connection();
     }
 }

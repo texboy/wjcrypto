@@ -16,5 +16,5 @@ Router::group([
     'namespace' => '\Wjcrypto\BankAccountRegister\Controller'
 ], function () {
     Router::post('/bank/account/register', 'RegisterController@registerAccount')
-        ->name('BankAccountRegister');
+        ->name('BankAccount');
 });

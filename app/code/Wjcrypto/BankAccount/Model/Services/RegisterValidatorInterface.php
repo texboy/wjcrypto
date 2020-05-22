@@ -3,7 +3,7 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services;
+namespace Wjcrypto\BankAccount\Model\Services;
 
 use Pecee\Http\Request;
 use Wjcrypto\Core\Model\ValidationResult;

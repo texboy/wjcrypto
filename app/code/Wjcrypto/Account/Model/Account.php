@@ -38,7 +38,7 @@ class Account extends Model
      * @var string[]
      */
     protected $fillable = [
-        'balance'
+        'balance','customer_id'
     ];
 
     /**

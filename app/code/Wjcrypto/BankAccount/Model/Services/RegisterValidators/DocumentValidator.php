@@ -5,12 +5,12 @@
 
 namespace Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators;
 
-use Wjcrypto\BankAccountRegister\Model\Services\RegisterValidatorInterface;
+use Wjcrypto\BankAccount\Model\Services\RegisterValidatorInterface;
 use Wjcrypto\Core\Model\ValidationResult;
 
 /**
  * Class CustomerValidator
- * @package Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators
+ * @package Wjcrypto\BankAccount\Model\Services\RegisterValidators
  */
 class DocumentValidator implements RegisterValidatorInterface
 {

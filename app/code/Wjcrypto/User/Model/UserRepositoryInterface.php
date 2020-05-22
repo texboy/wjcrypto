@@ -6,6 +6,7 @@
 namespace Wjcrypto\User\Model;
 
 use Exception;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -44,4 +45,9 @@ interface UserRepositoryInterface
      * @return bool
      */
     public function deleteUser(int $id): bool;
+
+    /**
+     * @return ConnectionInterface
+     */
+    public function getDatabaseConnection(): ConnectionInterface;
 }

@@ -46,15 +46,19 @@ return [
     'UserStreamHandler' =>
         \DI\autowire(Monolog\Handler\StreamHandler::class)
             ->constructor(__DIR__ . '/../../var/log/user.log', Monolog\Logger::INFO),
+
     'Wjcrypto\User\Model\UserLogger' =>
         \DI\autowire()
             ->constructor('general')
             ->method('pushHandler', DI\get('StreamHandler'))
             ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
 
-    /*____________BankAccountRegister________________*/
-    \Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessorInterface::class =>
-        \DI\autowire(\Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessor::class),
+    /*____________BankAccount________________*/
+    \Wjcrypto\BankAccount\Model\Services\RegisterProcessorInterface::class =>
+        \DI\autowire(\Wjcrypto\BankAccount\Model\Services\RegisterProcessor::class),
+
+    \Wjcrypto\BankAccountRegister\Model\Services\RegisterSaveInterface::class =>
+        \DI\autowire(\Wjcrypto\BankAccountRegister\Model\Services\RegisterSave::class),
 
     'register.validators' => [
         DI\get(UserValidator::class),

@@ -3,14 +3,14 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators;
+namespace Wjcrypto\BankAccount\Model\Services\RegisterValidators;
 
 use Wjcrypto\BankAccountRegister\Model\Services\RegisterValidatorInterface;
 use Wjcrypto\Core\Model\ValidationResult;
 
 /**
  * Class CustomerValidator
- * @package Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators
+ * @package Wjcrypto\BankAccount\Model\Services\RegisterValidators
  */
 class UserValidator implements RegisterValidatorInterface
 {

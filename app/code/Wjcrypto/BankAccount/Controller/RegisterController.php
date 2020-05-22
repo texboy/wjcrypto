@@ -3,14 +3,11 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Controller;
+namespace Wjcrypto\BankAccount\Controller;
 
 use Pecee\Http\Input\InputHandler;
-use Pecee\Http\Request;
 use Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessorInterface;
 use Wjcrypto\Core\Model\ValidationException;
-use Wjcrypto\Customer\Model\CustomerRepositoryInterface;
-use Wjcrypto\User\Model\UserRepositoryInterface;
 
 class RegisterController
 {
