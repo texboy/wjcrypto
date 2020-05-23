@@ -1,10 +1,12 @@
-<?php
+<?php /** @noinspection PhpComposerExtensionStubsInspection */
+
 /**
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
 namespace Core\Handlers;
 
+use Core\Model\ErrorLogger;
 use Core\Validation\ValidationException;
 use Exception;
 use Pecee\Http\Request;
@@ -17,6 +19,20 @@ use Pecee\SimpleRouter\Handlers\IExceptionHandler;
  */
 class CustomExceptionHandler implements IExceptionHandler
 {
+    /**
+     * @var ErrorLogger
+     */
+    private $errorLogger;
+
+    /**
+     * CustomExceptionHandler constructor.
+     * @param ErrorLogger $errorLogger
+     */
+    public function __construct(ErrorLogger $errorLogger)
+    {
+        $this->errorLogger = $errorLogger;
+    }
+
     /**
      * @param Request $request
      * @param Exception $error
@@ -47,6 +63,12 @@ class CustomExceptionHandler implements IExceptionHandler
                 'code' => $error->getCode(),
             ];
         }
+
+        $this->errorLogger->error(json_encode([
+               'error: ' => $errorMessages,
+                'code: ' => $errorCode,
+                'stacktrace: ' => $error->getTraceAsString()
+        ]));
         response()->httpCode($errorCode)->json([
             $errorMessages
         ]);

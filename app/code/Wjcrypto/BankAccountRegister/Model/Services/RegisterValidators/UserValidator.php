@@ -35,6 +35,7 @@ class UserValidator implements RegisterValidatorInterface
     {
         $errors = [];
         $contextPhrase = 'User creation error: ';
+
         if (!isset($requestData['user'])) {
             $errors[] = $contextPhrase . 'missing "user" key';
         } elseif (!isset($requestData['user']['username'])) {

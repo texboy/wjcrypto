@@ -72,4 +72,11 @@ class AccountUserController
                 ->getAll(self::BANK_USER_ACCOUNT_RELATIONSHIPS)->toArray()
         ]);
     }
+
+    public function editAccount($id): ?string
+    {
+        return response()->httpCode(200)->json(
+            ['Success!']
+        );
+    }
 }
