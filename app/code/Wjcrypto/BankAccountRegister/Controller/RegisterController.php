@@ -48,7 +48,7 @@ class RegisterController
     public function registerAccount(): ?string
     {
         $requestData = $this->inputHandler->all();
-        return response()->json([
+        return response()->httpCode(200)->json([
             $this->registerProcessor->process($requestData)
         ]);
     }

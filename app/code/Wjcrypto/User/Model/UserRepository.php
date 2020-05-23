@@ -5,58 +5,20 @@
 
 namespace Wjcrypto\User\Model;
 
-use Illuminate\Database\ConnectionInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Core\Model\BaseRepository;
 
 /**
  * Class UserRepository
  * @package Wjcrypto\User\Model
  */
-class UserRepository implements UserRepositoryInterface
+class UserRepository extends BaseRepository
 {
-
     /**
-     * @inheritDoc
+     * UserRepository constructor.
+     * @param User $user
      */
-    public function getUser(int $id): User
+    public function __construct(User $user)
     {
-        return User::find($id);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllUsers(): Collection
-    {
-        return User::all();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function saveUser(array $userData): int
-    {
-        return User::create($userData)->user_id;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function updateUser(int $id, array $userData): bool
-    {
-         return User::find($id)->update($userData);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function deleteUser(int $id): bool
-    {
-        return User::find($id)->delete();
-    }
-
-    public function getDatabaseConnection(): ConnectionInterface
-    {
-        return User::getConnectionResolver()->connection();
+        $this->entity = $user;
     }
 }

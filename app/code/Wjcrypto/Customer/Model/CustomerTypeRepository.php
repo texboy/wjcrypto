@@ -5,48 +5,20 @@
 
 namespace Wjcrypto\Customer\Model;
 
-use Illuminate\Database\Eloquent\Collection;
+use Core\Model\BaseRepository;
 
-class CustomerTypeRepository implements CustomerTypeRepositoryInterface
+/**
+ * Class CustomerTypeRepository
+ * @package Wjcrypto\Customer\Model
+ */
+class CustomerTypeRepository extends BaseRepository
 {
-
     /**
-     * @inheritDoc
+     * CustomerTypeRepository constructor.
+     * @param CustomerType $customerType
      */
-    public function getCustomerType(int $id): CustomerType
+    public function __construct(CustomerType $customerType)
     {
-        return CustomerType::find($id);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllCustomerTypes(): Collection
-    {
-        return CustomerType::all();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function saveCustomerType(array $customerTypeData): int
-    {
-        return CustomerType::create($customerTypeData)->customer_type_id;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function updateCustomerType(int $id, array $customerTypeData): bool
-    {
-        return CustomerType::find($id)->update($customerTypeData);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function deleteCustomerType(int $id): bool
-    {
-        return CustomerType::find($id)->delete();
+        $this->entity = $customerType;
     }
 }

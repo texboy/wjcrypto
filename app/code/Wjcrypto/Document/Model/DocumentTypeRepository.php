@@ -5,52 +5,21 @@
 
 namespace Wjcrypto\Document\Model;
 
-use Illuminate\Database\Eloquent\Collection;
+use Core\Model\BaseRepository;
 
 /**
  * Class DocumentTypeRepository
  * @package Wjcrypto\Document\Model
  */
-class DocumentTypeRepository implements DocumentTypeRepositoryInterface
+class DocumentTypeRepository extends BaseRepository
 {
 
     /**
-     * @inheritDoc
+     * DocumentTypeRepository constructor.
+     * @param DocumentType $documentType
      */
-    public function getDocumentType(int $id): DocumentType
+    public function __construct(DocumentType $documentType)
     {
-        return DocumentType::find($id);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllDocumentTypes(): Collection
-    {
-        return DocumentType::all();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function saveDocumentType(array $documentData): int
-    {
-        return DocumentType::create($documentData);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function updateDocumentType(int $id, array $documentData): bool
-    {
-        return DocumentType::find($id)->update($documentData);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function deleteDocumentType(int $id): bool
-    {
-        return DocumentType::find($id)->delete();
+        $this->entity = $documentType;
     }
 }

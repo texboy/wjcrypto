@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Core\Traits\EncryptionTrait;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Wjcrypto\Account\Model\Account;
+use Wjcrypto\Document\Model\Document;
+use Wjcrypto\User\Model\User;
 
 /**
  * Class Customer
@@ -54,7 +58,7 @@ class Customer extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo('Wjcrypto\User\Model\User', 'user_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     /**
@@ -62,14 +66,22 @@ class Customer extends Model
      */
     public function customerType(): BelongsTo
     {
-        return $this->belongsTo('Wjcrypto\Customer\Model\CustomerType', 'customer_type_id', 'customer_type_id');
+        return $this->belongsTo(CustomerType::class, 'customer_type_id', 'customer_type_id');
     }
 
     /**
      * @return HasMany
      */
-    public function documents(): HasMany
+    public function document(): HasMany
     {
-        return $this->hasMany('Wjcrypto\Document\Model\Document', 'customer_id', 'customer_id');
+        return $this->hasMany(Document::class, 'customer_id', 'customer_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function account(): HasOne
+    {
+        return $this->hasOne(Account::class, 'customer_id', 'customer_id');
     }
 }

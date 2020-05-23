@@ -24,31 +24,32 @@ class CustomExceptionHandler implements IExceptionHandler
      */
     public function handleError(Request $request, Exception $error): void
     {
+        $errorMessages = [];
+        $errorCode = 0;
         if ($error instanceof ValidationException) {
             $validationExceptions = $error->getErrors();
-            $errorMessages = [];
+            $errorCode = 400;
             foreach ($validationExceptions as $exception) {
-                $errorMessages[] = [
-                    'error' => $exception->getMessage(),
-                    'code' => $exception->getCode(),
-                ];
+                $messages[] =  [ 'error' => $exception->getMessage()];
             }
-            response()->httpCode(420)->json([
-                "ValidationException:" => $errorMessages
-            ]);
+            $errorMessages['validationException'] = $messages;
+            $errorMessages['code'] = $errorCode;
         } elseif ($error instanceof NotFoundHttpException) {
-            response()->httpCode($error->getCode())->json([
+            $errorCode = 404;
+            $errorMessages = [
                 'error' => $error->getMessage(),
                 'code' => $error->getCode(),
-            ]);
+            ];
         } else {
-            response()->json([
+            $errorCode = 400;
+            $errorMessages = [
                 'error' => $error->getMessage(),
                 'code' => $error->getCode(),
-            ]);
+            ];
         }
-
-
+        response()->httpCode($errorCode)->json([
+            $errorMessages
+        ]);
 
         throw $error;
     }

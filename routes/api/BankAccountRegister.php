@@ -3,10 +3,6 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-/**
- * This file contains all the routes for the project
- */
-
 use Pecee\SimpleRouter\SimpleRouter as Router;
 
 Router::group([

@@ -43,7 +43,7 @@ class ValidationException extends \Exception
         $errors = [];
         if (null !== $this->validationResult) {
             foreach ($this->validationResult->getErrors() as $error) {
-                $errors[] = new \Exception($error);
+                $errors[] = new \Exception($error, 400);
             }
         }
         return $errors;

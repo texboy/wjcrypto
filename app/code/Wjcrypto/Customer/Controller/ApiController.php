@@ -8,6 +8,7 @@ namespace Wjcrypto\Customer\Controller;
 use Pecee\Controllers\IResourceController;
 use Psr\Log\LoggerInterface;
 use Wjcrypto\Customer\Model\Customer;
+use Wjcrypto\Customer\Model\CustomerRepository;
 use Wjcrypto\Document\Model\Document;
 
 /**
@@ -32,14 +33,21 @@ class ApiController implements IResourceController{
     private $document;
 
     /**
+     * @var CustomerRepository
+     */
+    private $customerRepository;
+
+    /**
      * ApiController constructor.
      * @param Customer $customer
      * @param Document $document
+     * @param CustomerRepository $customerRepository
      */
-    public function __construct(Customer $customer, Document $document)
+    public function __construct(Customer $customer, Document $document, CustomerRepository $customerRepository)
     {
         $this->customer = $customer;
         $this->document = $document;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -48,7 +56,7 @@ class ApiController implements IResourceController{
     public function index(): ?string
     {
         return response()->json([
-           "customer" => "customer"
+           $this->customerRepository->getAll()->toArray()
         ]);
     }
 
@@ -71,8 +79,6 @@ class ApiController implements IResourceController{
      */
     public function store(): ?string
     {
-
-
         $this->customer->getConnection()->transaction(
             function () {
                 $customer = input()->all()['customer'];

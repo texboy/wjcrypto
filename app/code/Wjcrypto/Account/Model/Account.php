@@ -7,7 +7,6 @@ namespace Wjcrypto\Account\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Core\Traits\EncryptionTrait;
 
 /**
@@ -32,6 +31,7 @@ class Account extends Model
      * @var string[]
      */
     protected $encryptable = [
+        'balance'
     ];
 
     /**

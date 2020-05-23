@@ -8,6 +8,7 @@ namespace Wjcrypto\User\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Core\Traits\EncryptionTrait;
+use Wjcrypto\Customer\Model\Customer;
 
 /**
  * Class Customer
@@ -53,6 +54,6 @@ class User extends Model
      */
     public function customer(): HasOne
     {
-        return $this->hasOne('Wjcrypto/Customer/Model/Customer', 'user_id', "user_id");
+        return $this->hasOne(Customer::class, 'user_id', "user_id");
     }
 }

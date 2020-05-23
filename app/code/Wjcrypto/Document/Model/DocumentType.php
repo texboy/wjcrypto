@@ -8,6 +8,7 @@ namespace Wjcrypto\Document\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Core\Traits\EncryptionTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class DocumentType
@@ -20,25 +21,25 @@ class DocumentType extends Model
     /**
      * @var string
      */
-    protected $table = 'document';
+    protected $table = 'document_type';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'document_id';
+    protected $primaryKey = 'document_type_id';
 
     /**
      * @var string[]
      */
     protected $encryptable = [
-        'document_number'
+
     ];
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'document_number','customer_id','document_type_id'
+        'name'
     ];
 
     /**
@@ -49,18 +50,10 @@ class DocumentType extends Model
     ];
 
     /**
-     * @return BelongsTo
+     * @return HasMany
      */
-    public function customer(): BelongsTo
+    public function document(): HasMany
     {
-        return $this->belongsTo('Wjcrypto\Customer\Model\Customer', 'customer_id');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function documentType(): BelongsTo
-    {
-        return $this->belongsTo('Wjcrypto\Document\Model\DocumentType', 'document_type_id');
+        return $this->hasMany(Document::class, 'document_type_id', 'document_type_id');
     }
 }

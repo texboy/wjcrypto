@@ -5,51 +5,20 @@
 
 namespace Wjcrypto\Account\Model;
 
-use Illuminate\Database\Eloquent\Collection;
+use Core\Model\BaseRepository;
 
-class AccountRepository implements AccountRepositoryInterface
+/**
+ * Class AccountRepository
+ * @package Wjcrypto\Account\Model
+ */
+class AccountRepository extends BaseRepository
 {
-
     /**
-     * @inheritDoc
+     * AccountRepository constructor.
+     * @param Account $account
      */
-    public function getAccount(int $id): Account
+    public function __construct(Account $account)
     {
-        return Account::find($id);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllAccounts(): Collection
-    {
-        return Account::all();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function saveAccount(int $customerId): int
-    {
-        return Account::create([
-            'customer_id' => $customerId,
-            'balance' => 0.0
-        ])->account_id;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function updateAccount(int $id, array $accountData): bool
-    {
-        return Account::find($id)->update($accountData);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function deleteAccount(int $id): bool
-    {
-        return Account::find($id)->delete();
+        $this->entity = $account;
     }
 }

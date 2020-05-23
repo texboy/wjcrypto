@@ -14,7 +14,7 @@ Manager::schema()->create('user', function ($table) {
 
 Manager::table('user')->insert(
     array(
-        'username' => \Wjcrypto\Encryption\Model\Encryption::getEncrypter()->encrypt('admin'),
-        'password' => \Wjcrypto\Encryption\Model\Encryption::getEncrypter()->encrypt('admin')
+        'username' => \Core\Model\Encryption::getEncrypter()->encrypt('admin'),
+        'password' => \Core\Model\Encryption::getEncrypter()->encrypt('admin')
     )
 );

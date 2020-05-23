@@ -7,13 +7,14 @@ namespace Wjcrypto\User\Controller;
 
 use Pecee\Controllers\IResourceController;
 use Wjcrypto\User\Model\User;
+use Wjcrypto\User\Model\UserRepository;
 use Wjcrypto\User\Model\UserRepositoryInterface;
 
 /**
  * Class ApiController
  * @package Wjcrypto\User\Controller
  */
-class ApiController implements IResourceController{
+class ApiController implements IResourceController {
 
     /**
      * @var User
@@ -21,18 +22,18 @@ class ApiController implements IResourceController{
     private $user;
 
     /**
-     * @var UserRepositoryInterface
+     * @var UserRepository
      */
     private $userRepository;
 
     /**
      * ApiController constructor.
      * @param User $user
-     * @param UserRepositoryInterface $userRepository
+     * @param UserRepository $userRepository
      */
     public function __construct(
         User $user,
-        UserRepositoryInterface $userRepository
+        UserRepository $userRepository
     ) {
         $this->user = $user;
         $this->userRepository = $userRepository;
@@ -54,7 +55,7 @@ class ApiController implements IResourceController{
      */
     public function show($id): ?string
     {
-        $user = $this->userRepository->getUser($id);
+        $user = $this->userRepository->getById($id);
         return response()->json([
             $user->toArray()
         ]);

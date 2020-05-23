@@ -13,25 +13,6 @@ return [
         \DI\autowire()
             ->constructor(getenv('APP_KEY'), 'AES-256-CBC'),
 
-    //Repositories
-    \Wjcrypto\User\Model\UserRepositoryInterface::class =>
-        \DI\autowire(\Wjcrypto\User\Model\UserRepository::class),
-
-    \Wjcrypto\Customer\Model\CustomerRepositoryInterface::class =>
-        \DI\autowire(\Wjcrypto\Customer\Model\CustomerRepository::class),
-
-    \Wjcrypto\Customer\Model\CustomerTypeRepositoryInterface::class =>
-        \DI\autowire(\Wjcrypto\Customer\Model\CustomerTypeRepository::class),
-
-    \Wjcrypto\Document\Model\DocumentRepositoryInterface::class =>
-        \DI\autowire(\Wjcrypto\Document\Model\DocumentRepository::class),
-
-    \Wjcrypto\Document\Model\DocumentTypeRepositoryInterface::class =>
-        \DI\autowire(\Wjcrypto\Document\Model\DocumentTypeRepository::class),
-
-    \Wjcrypto\Account\Model\AccountRepositoryInterface::class =>
-        \DI\autowire(\Wjcrypto\Account\Model\AccountRepository::class),
-
     //Loggers
     'CoreStreamHandler' =>
         \DI\autowire(Monolog\Handler\StreamHandler::class)
@@ -39,18 +20,18 @@ return [
 
     \Core\Model\CoreLogger::class =>
         \DI\autowire()
-            ->constructor('general')
+            ->constructor('core')
             ->method('pushHandler', DI\get('CoreStreamHandler'))
             ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
 
-    'UserStreamHandler' =>
+    'ErrorStreamHandler' =>
         \DI\autowire(Monolog\Handler\StreamHandler::class)
-            ->constructor(__DIR__ . '/../../var/log/user.log', Monolog\Logger::INFO),
+            ->constructor(__DIR__ . '/../../var/log/error.log', Monolog\Logger::INFO),
 
-    'Wjcrypto\User\Model\UserLogger' =>
+     \Core\Model\ErrorLogger::class =>
         \DI\autowire()
-            ->constructor('general')
-            ->method('pushHandler', DI\get('StreamHandler'))
+            ->constructor('error')
+            ->method('pushHandler', DI\get('ErrorStreamHandler'))
             ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
 
     /*____________BankAccount________________*/

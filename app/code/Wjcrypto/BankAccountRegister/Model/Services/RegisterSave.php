@@ -5,10 +5,10 @@
 
 namespace Wjcrypto\BankAccountRegister\Model\Services;
 
-use Wjcrypto\Account\Model\AccountRepositoryInterface;
-use Wjcrypto\Customer\Model\CustomerRepositoryInterface;
-use Wjcrypto\Document\Model\DocumentRepositoryInterface;
-use Wjcrypto\User\Model\UserRepositoryInterface;
+use Wjcrypto\Account\Model\AccountRepository;
+use Wjcrypto\Customer\Model\CustomerRepository;
+use Wjcrypto\Document\Model\DocumentRepository;
+use Wjcrypto\User\Model\UserRepository;
 
 /**
  * Class RegisterSave
@@ -18,37 +18,37 @@ class RegisterSave implements RegisterSaveInterface
 {
 
     /**
-     * @var UserRepositoryInterface
+     * @var UserRepository
      */
     private $userRepository;
 
     /**
-     * @var CustomerRepositoryInterface
+     * @var CustomerRepository
      */
     private $customerRepository;
 
     /**
-     * @var DocumentRepositoryInterface
+     * @var DocumentRepository
      */
     private $documentRepository;
 
     /**
-     * @var AccountRepositoryInterface
+     * @var AccountRepository
      */
     private $accountRepository;
 
     /**
      * RegisterSave constructor.
-     * @param UserRepositoryInterface $userRepository
-     * @param CustomerRepositoryInterface $customerRepository
-     * @param DocumentRepositoryInterface $documentRepository
-     * @param AccountRepositoryInterface $accountRepository
+     * @param UserRepository $userRepository
+     * @param CustomerRepository $customerRepository
+     * @param DocumentRepository $documentRepository
+     * @param AccountRepository $accountRepository
      */
     public function __construct(
-        UserRepositoryInterface $userRepository,
-        CustomerRepositoryInterface $customerRepository,
-        DocumentRepositoryInterface $documentRepository,
-        AccountRepositoryInterface $accountRepository
+        UserRepository $userRepository,
+        CustomerRepository $customerRepository,
+        DocumentRepository $documentRepository,
+        AccountRepository $accountRepository
     ) {
         $this->userRepository = $userRepository;
         $this->customerRepository = $customerRepository;
@@ -69,10 +69,13 @@ class RegisterSave implements RegisterSaveInterface
 
         return $databaseConnection->transaction(
             function () use ($user, $customer, $documents) {
-                $customer['user_id'] = $this->userRepository->saveUser($user);
-                $customerId = $this->customerRepository->saveCustomer($customer);
+                $customer['user_id'] = $this->userRepository->save($user)->user_id;
+                $customerId = $this->customerRepository->save($customer)->customer_id;
                 $this->createDocument($documents, $customerId);
-                $accountNumber = $this->accountRepository->saveAccount($customerId);
+                $accountNumber = $this->accountRepository->save([
+                    'customer_id' => $customerId,
+                    'balance' => '0'
+                    ])->account_id;
                 return 'New account number: ' . $accountNumber;
             }
         );
@@ -86,7 +89,7 @@ class RegisterSave implements RegisterSaveInterface
     {
         foreach ($documents as $document) {
              $document['customer_id'] = $customer_id;
-             $this->documentRepository->saveDocument($document);
+             $this->documentRepository->save($document);
         }
     }
 }

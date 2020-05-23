@@ -5,52 +5,20 @@
 
 namespace Wjcrypto\Customer\Model;
 
-use Illuminate\Database\Eloquent\Collection;
+use Core\Model\BaseRepository;
 
 /**
  * Class CustomerRepository
  * @package Wjcrypto\Customer\Model
  */
-class CustomerRepository implements CustomerRepositoryInterface
+class CustomerRepository extends BaseRepository
 {
-
     /**
-     * @inheritDoc
+     * CustomerRepository constructor.
+     * @param Customer $customer
      */
-    public function getCustomer(int $id): Customer
+    public function __construct(Customer $customer)
     {
-        return Customer::find($id);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllCustomers(): Collection
-    {
-        return Customer::all();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function saveCustomer(array $customerData): int
-    {
-        return Customer::create($customerData)->customer_id;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function updateCustomer(int $id, array $customerData): bool
-    {
-        return Customer::find($id)->update($customerData);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function deleteCustomer(int $id): bool
-    {
-        return Customer::find($id)->delete();
+        $this->entity = $customer;
     }
 }
