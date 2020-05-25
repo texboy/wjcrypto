@@ -3,15 +3,16 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services;
+namespace Wjcrypto\BankAccountEdit\Model\Services;
 
 use Core\Validation\ValidationResult;
+use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 
 /**
  * Class RegisterValidator
  * @package Wjcrypto\BankAccountRegister\Model\Services
  */
-class RegisterValidator implements AccountValidatorInterface
+class EditValidator implements AccountValidatorInterface
 {
     /**
      * @var ValidationResult
@@ -21,19 +22,19 @@ class RegisterValidator implements AccountValidatorInterface
     /**
      * @var AccountValidatorInterface[]
      */
-    private $registerValidators;
+    private $editValidators;
 
     /**
      * RegisterValidator constructor.
      * @param ValidationResult $validationResult
-     * @param AccountValidatorInterface[] $registerValidators
+     * @param AccountValidatorInterface[] $editValidators
      */
     public function __construct(
         ValidationResult $validationResult,
-        array $registerValidators = []
+        array $editValidators = []
     ) {
         $this->validationResult = $validationResult;
-        $this->registerValidators = $registerValidators;
+        $this->editValidators = $editValidators;
     }
 
     /**
@@ -42,7 +43,7 @@ class RegisterValidator implements AccountValidatorInterface
     public function validate(array $requestData): ValidationResult
     {
         $errors = [];
-        foreach ($this->registerValidators as $validator) {
+        foreach ($this->editValidators as $validator) {
             $validationResult = $validator->validate($requestData);
             if ($validationResult->isValid() === false) {
                 $errors = array_merge($errors, $validationResult->getErrors());

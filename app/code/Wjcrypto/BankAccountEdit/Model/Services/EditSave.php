@@ -3,7 +3,7 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services;
+namespace Wjcrypto\BankAccountEdit\Model\Services;
 
 use Throwable;
 use Wjcrypto\Account\Model\AccountRepository;
@@ -15,7 +15,7 @@ use Wjcrypto\User\Model\UserRepository;
  * Class RegisterSave
  * @package Wjcrypto\BankAccountRegister\Model\Services
  */
-class RegisterSave
+class EditSave
 {
 
     /**
@@ -66,31 +66,11 @@ class RegisterSave
     public function save(array $accountData): string
     {
         $databaseConnection = $this->userRepository->getDatabaseConnection();
-        $user = $accountData;
-        $customer = $user['customer'];
-        $documents = $customer['documents'];
-
-        return $databaseConnection->transaction(function () use ($user, $customer, $documents) {
-            $customer['user_id'] = $this->userRepository->save($user)->user_id;
-            $customerId = $this->customerRepository->save($customer)->customer_id;
-            $this->createDocument($documents, $customerId);
-            $accountNumber = $this->accountRepository->save([
-                'customer_id' => $customerId,
-                'balance' => '0'
-                ])->account_id;
-            return 'New account number: ' . $accountNumber;
+        return $databaseConnection->transaction(function () use ($accountData) {
+            $user = $this->userRepository->getById($accountData['user_id']);
+            $this->userRepository->update($user->fill($accountData));
+            $this->customerRepository->update($user->customer->fill($accountData['customer']));
+            return 'Success';
         });
-    }
-
-    /**
-     * @param $documents
-     * @param $customer_id
-     */
-    private function createDocument($documents, $customer_id)
-    {
-        foreach ($documents as $document) {
-             $document['customer_id'] = $customer_id;
-             $this->documentRepository->save($document);
-        }
     }
 }

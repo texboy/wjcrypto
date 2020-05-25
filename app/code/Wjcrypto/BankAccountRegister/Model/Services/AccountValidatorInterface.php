@@ -7,7 +7,11 @@ namespace Wjcrypto\BankAccountRegister\Model\Services;
 
 use Core\Validation\ValidationResult;
 
-interface RegisterValidatorInterface
+/**
+ * Interface RegisterValidatorInterface
+ * @package Wjcrypto\BankAccountRegister\Model\Services
+ */
+interface AccountValidatorInterface
 {
     /**
      * @param array $requestData

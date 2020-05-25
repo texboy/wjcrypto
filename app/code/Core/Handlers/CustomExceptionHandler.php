@@ -65,9 +65,9 @@ class CustomExceptionHandler implements IExceptionHandler
         }
 
         $this->errorLogger->error(json_encode([
-               'error: ' => $errorMessages,
-                'code: ' => $errorCode,
-                'stacktrace: ' => $error->getTraceAsString()
+            'error: ' => $errorMessages,
+            'code: ' => $errorCode,
+            'stacktrace: ' => $error->getTraceAsString()
         ]));
         response()->httpCode($errorCode)->json([
             $errorMessages

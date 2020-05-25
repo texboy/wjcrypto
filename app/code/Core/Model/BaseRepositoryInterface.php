@@ -40,11 +40,10 @@ interface BaseRepositoryInterface
     public function save(array $data): Model;
 
     /**
-     * @param int $id
-     * @param array $data
+     * @param Model $updatedEntity
      * @return bool
      */
-    public function update(int $id, array $data): bool;
+    public function update(Model $updatedEntity): bool;
 
     /**
      * @param int $id

@@ -3,14 +3,14 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators;
+namespace Wjcrypto\BankAccountEdit\Model\Services\EditValidators;
 
 use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
 
 /**
- * Class CustomerValidator
- * @package Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators
+ * Class UserValidator
+ * @package Wjcrypto\BankAccountEdit\Model\Services\EditValidators
  */
 class UserValidator implements AccountValidatorInterface
 {
@@ -34,14 +34,12 @@ class UserValidator implements AccountValidatorInterface
     public function validate(array $requestData): ValidationResult
     {
         $errors = [];
-        $contextPhrase = 'User creation error: ';
+        $contextPhrase = 'User edit error: ';
 
         if (!isset($requestData['user'])) {
             $errors[] = $contextPhrase . 'missing "user" key';
-        } elseif (!isset($requestData['user']['username'])) {
-            $errors[] = $contextPhrase . 'missing "username" key';
-        } elseif (!isset($requestData['user']['password'])) {
-            $errors[] = $contextPhrase . 'missing "password" key';
+        } elseif (!isset($requestData['user']['user_id'])) {
+            $errors[] = $contextPhrase . 'missing "user_id" key';
         }
 
         $this->validationResult->setErrors($errors);

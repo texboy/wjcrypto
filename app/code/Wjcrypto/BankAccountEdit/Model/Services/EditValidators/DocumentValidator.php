@@ -3,16 +3,16 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators;
+namespace Wjcrypto\BankAccountEdit\Model\Services\EditValidators;
 
 use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
 
 /**
- * Class CustomerValidator
- * @package Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators
+ * Class DocumentValidator
+ * @package Wjcrypto\BankAccountEdit\Model\Services\EditValidators
  */
-class CustomerValidator implements AccountValidatorInterface
+class DocumentValidator implements AccountValidatorInterface
 {
     /**
      * @var ValidationResult
@@ -29,20 +29,14 @@ class CustomerValidator implements AccountValidatorInterface
         $this->validationResult = $validationResult;
     }
 
-
     /**
      * @inheritDoc
      */
     public function validate(array $requestData): ValidationResult
     {
         $errors = [];
-        $contextPhrase = 'Customer creation error: ';
-        if (!isset($requestData['user']['customer'])) {
-            $errors[] =  $contextPhrase . 'missing "customer" key';
-        } elseif (!isset($requestData['user']['customer']['name'])) {
-            $errors[] =  $contextPhrase . 'missing "name" key';
-        } elseif (!isset($requestData['user']['customer']['customer_type_id'])) {
-            $errors[] =  $contextPhrase . 'missing "customer_type_id" key';
+        if (isset($requestData['user']['customer']['documents'])) {
+            $errors[] = 'Document editing is not allowed. Remove the documents key';
         }
 
         $this->validationResult->setErrors($errors);

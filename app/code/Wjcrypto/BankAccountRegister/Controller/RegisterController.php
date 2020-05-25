@@ -7,7 +7,8 @@ namespace Wjcrypto\BankAccountRegister\Controller;
 
 use Pecee\Http\Input\InputHandler;
 use Throwable;
-use Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessorInterface;
+use Wjcrypto\BankAccount\Model\BankAccountLogger;
+use Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessor;
 use Core\Validation\ValidationException;
 
 /**
@@ -18,7 +19,7 @@ class RegisterController
 {
 
     /**
-     * @var RegisterProcessorInterface
+     * @var RegisterProcessor
      */
     private $registerProcessor;
 
@@ -28,12 +29,16 @@ class RegisterController
     private $inputHandler;
 
     /**
+     * @var BankAccountLogger
+     */
+
+    /**
      * RegisterController constructor.
-     * @param RegisterProcessorInterface $registerProcessor
+     * @param RegisterProcessor $registerProcessor
      * @param InputHandler $inputHandler
      */
     public function __construct(
-        RegisterProcessorInterface $registerProcessor,
+        RegisterProcessor $registerProcessor,
         InputHandler $inputHandler
     ) {
         $this->registerProcessor = $registerProcessor;
@@ -47,9 +52,8 @@ class RegisterController
      */
     public function registerAccount(): ?string
     {
-        $requestData = $this->inputHandler->all();
         return response()->httpCode(200)->json([
-            $this->registerProcessor->process($requestData)
+            $this->registerProcessor->process($this->inputHandler->all())
         ]);
     }
 }

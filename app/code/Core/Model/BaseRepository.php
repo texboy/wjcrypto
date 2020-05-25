@@ -49,9 +49,9 @@ class BaseRepository implements BaseRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function update(int $id, array $data): bool
+    public function update(Model $updatedEntity): bool
     {
-        return $this->entity::find($id)->update($data);
+        return $updatedEntity->save();
     }
 
     /**

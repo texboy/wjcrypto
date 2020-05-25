@@ -3,7 +3,7 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators;
+namespace Wjcrypto\BankAccountEdit\Model\Services\EditValidators;
 
 use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
@@ -12,7 +12,7 @@ use Core\Validation\ValidationResult;
  * Class CustomerValidator
  * @package Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators
  */
-class UserValidator implements AccountValidatorInterface
+class CustomerValidator implements AccountValidatorInterface
 {
     /**
      * @var ValidationResult
@@ -23,10 +23,12 @@ class UserValidator implements AccountValidatorInterface
      * CustomerValidator constructor.
      * @param ValidationResult $validationResult
      */
-    public function __construct(ValidationResult $validationResult)
-    {
+    public function __construct(
+        ValidationResult $validationResult
+    ) {
         $this->validationResult = $validationResult;
     }
+
 
     /**
      * @inheritDoc
@@ -34,14 +36,13 @@ class UserValidator implements AccountValidatorInterface
     public function validate(array $requestData): ValidationResult
     {
         $errors = [];
-        $contextPhrase = 'User creation error: ';
-
-        if (!isset($requestData['user'])) {
-            $errors[] = $contextPhrase . 'missing "user" key';
-        } elseif (!isset($requestData['user']['username'])) {
-            $errors[] = $contextPhrase . 'missing "username" key';
-        } elseif (!isset($requestData['user']['password'])) {
-            $errors[] = $contextPhrase . 'missing "password" key';
+        $contextPhrase = 'Customer edit error: ';
+        if (!isset($requestData['user']['customer'])) {
+            $errors[] =  $contextPhrase . 'missing "customer" key';
+        } elseif (!isset($requestData['user']['customer']['name'])) {
+            $errors[] =  $contextPhrase . 'missing "name" key';
+        } elseif (isset($requestData['user']['customer']['customer_type_id'])) {
+            $errors[] =  $contextPhrase . 'customer type edit not allowed. Remove "customer_type_id" key';
         }
 
         $this->validationResult->setErrors($errors);

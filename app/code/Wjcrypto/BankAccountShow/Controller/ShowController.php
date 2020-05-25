@@ -3,21 +3,16 @@
  * Copyright (c) 2020. Victor Barcellos Lopes (Texboy)
  */
 
-namespace Wjcrypto\BankAccountUser\Controller;
+namespace Wjcrypto\BankAccountShow\Controller;
 
 use Exception;
-use Pecee\Http\Input\InputHandler;
-use Throwable;
-use Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessorInterface;
-use Core\Validation\ValidationException;
-use Wjcrypto\Customer\Model\CustomerRepository;
 use Wjcrypto\User\Model\UserRepository;
 
 /**
- * Class RegisterController
- * @package Wjcrypto\BankAccountRegister\Controller
+ * Class ShowController
+ * @package Wjcrypto\BankAccountShow\Controller
  */
-class AccountUserController
+class ShowController
 {
     public const BANK_USER_ACCOUNT_RELATIONSHIPS = [
         'customer.customerType',
@@ -31,21 +26,12 @@ class AccountUserController
     private $userRepository;
 
     /**
-     * @var CustomerRepository
-     */
-    private $customerRepository;
-
-    /**
-     * AccountUserController constructor.
+     * ShowController constructor.
      * @param UserRepository $userRepository
-     * @param CustomerRepository $customerRepository
      */
-    public function __construct(
-        UserRepository $userRepository,
-        CustomerRepository $customerRepository
-    ) {
+    public function __construct(UserRepository $userRepository)
+    {
         $this->userRepository = $userRepository;
-        $this->customerRepository = $customerRepository;
     }
 
 
@@ -71,12 +57,5 @@ class AccountUserController
             $this->userRepository
                 ->getAll(self::BANK_USER_ACCOUNT_RELATIONSHIPS)->toArray()
         ]);
-    }
-
-    public function editAccount($id): ?string
-    {
-        return response()->httpCode(200)->json(
-            ['Success!']
-        );
     }
 }

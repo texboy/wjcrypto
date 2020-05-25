@@ -7,26 +7,30 @@ namespace Wjcrypto\BankAccountRegister\Model\Services;
 
 use Core\Validation\ValidationException;
 
-class RegisterProcessor implements RegisterProcessorInterface
+/**
+ * Class RegisterProcessor
+ * @package Wjcrypto\BankAccountRegister\Model\Services
+ */
+class RegisterProcessor
 {
     /**
-     * @var RegisterValidatorInterface
+     * @var RegisterValidator
      */
     private $registerValidator;
 
     /**
-     * @var RegisterSaveInterface
+     * @var RegisterSave
      */
     private $registerSave;
 
     /**
      * RegisterProcessor constructor.
-     * @param RegisterValidatorInterface $registerValidator
-     * @param RegisterSaveInterface $registerSave
+     * @param RegisterValidator $registerValidator
+     * @param RegisterSave $registerSave
      */
     public function __construct(
-        RegisterValidatorInterface $registerValidator,
-        RegisterSaveInterface $registerSave
+        RegisterValidator $registerValidator,
+        RegisterSave $registerSave
     ) {
         $this->registerValidator = $registerValidator;
         $this->registerSave = $registerSave;
