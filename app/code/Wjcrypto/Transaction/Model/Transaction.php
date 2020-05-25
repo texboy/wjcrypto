@@ -51,6 +51,14 @@ class Transaction extends Model
     /**
      * @return BelongsTo
      */
+    public function transactionType(): BelongsTo
+    {
+        return $this->belongsTo(TransactionType::class, 'transaction_type_id', 'transaction_type_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
     public function sender(): BelongsTo
     {
         return $this->belongsTo(Account::class, 'sender_account_id', 'account_id');

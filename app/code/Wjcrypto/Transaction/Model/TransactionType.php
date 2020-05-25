@@ -15,6 +15,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class TransactionType extends Model
 {
+    public const TRANSACTION_TYPE_DEPOSIT = 'deposit';
+    public const TRANSACTION_TYPE_WITHDRAW = 'deposit';
+    public const TRANSACTION_TYPE_TRANSFER = 'transfer';
+
     use EncryptionTrait;
 
     /**

@@ -8,6 +8,7 @@ namespace Wjcrypto\Account\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Core\Traits\EncryptionTrait;
+use Wjcrypto\Customer\Model\Customer;
 
 /**
  * Class Customer
@@ -52,6 +53,6 @@ class Account extends Model
      */
     public function customer(): BelongsTo
     {
-        return $this->belongsTo('Wjcrypto/Customer/Model/Customer', 'customer_id', "customer_id");
+        return $this->belongsTo(Customer::class, 'customer_id', "customer_id");
     }
 }

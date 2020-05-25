@@ -11,6 +11,7 @@ use Wjcrypto\BankAccount\Model\BankAccountLogger;
 use Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessor;
 use Core\Validation\ValidationException;
 use Wjcrypto\BankTransactionCreate\Model\Services\TransactionProcessor;
+use Wjcrypto\Transaction\Model\Transaction;
 
 /**
  * Class RegisterController
@@ -45,8 +46,11 @@ class CreateController
      */
     public function createTransaction(): ?string
     {
+        $test = new Transaction();
+
         return response()->httpCode(200)->json([
-            $this->transactionProcessor->process($this->inputHandler->all())
+            $this->transactionProcessor->process($this->inputHandler->all()),
+            $test->with('transactionType', 'sender.customer.user', 'receiver.customer.user')->find(1)->toArray()
         ]);
     }
 }
