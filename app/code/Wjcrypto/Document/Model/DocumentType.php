@@ -39,7 +39,7 @@ class DocumentType extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name'
+        'value'
     ];
 
     /**

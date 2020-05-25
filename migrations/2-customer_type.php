@@ -7,12 +7,12 @@ use Illuminate\Database\Capsule\Manager;
 
 Manager::schema()->create('customer_type', function ($table) {
     $table->id('customer_type_id');
-    $table->string('name');
+    $table->string('value');
 });
 
 Manager::table('customer_type')->insert(
     [
-        ['name' => 'pf'],
-        ['name' => 'pj']
+        ['value' => 'pf'],
+        ['value' => 'pj']
     ]
 );

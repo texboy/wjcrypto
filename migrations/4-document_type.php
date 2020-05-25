@@ -7,14 +7,14 @@ use Illuminate\Database\Capsule\Manager;
 
 Manager::schema()->create('document_type', function ($table) {
     $table->id('document_type_id');
-    $table->string('name');
+    $table->string('value');
 });
 
 Manager::table('document_type')->insert(
     [
-        ['name' => 'rg'],
-        ['name' => 'cpf'],
-        ['name' => 'cnpj'],
-        ['name' => 'ie']
+        ['value' => 'rg'],
+        ['value' => 'cpf'],
+        ['value' => 'cnpj'],
+        ['value' => 'ie']
     ]
 );

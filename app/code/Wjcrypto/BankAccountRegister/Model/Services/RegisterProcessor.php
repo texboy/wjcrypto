@@ -6,6 +6,7 @@
 namespace Wjcrypto\BankAccountRegister\Model\Services;
 
 use Core\Validation\ValidationException;
+use Throwable;
 
 /**
  * Class RegisterProcessor
@@ -37,7 +38,10 @@ class RegisterProcessor
     }
 
     /**
-     * @inheritDoc
+     * @param array $requestData
+     * @return string
+     * @throws ValidationException
+     * @throws Throwable
      */
     public function process(array $requestData): string
     {

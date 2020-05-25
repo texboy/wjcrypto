@@ -62,4 +62,15 @@ return [
         \DI\autowire()
             ->constructorParameter('editValidators', DI\get('edit.validators')),
 
+    //________BankTransaction_________
+
+    'transaction.validators' => [
+        DI\get(\Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators\TransactionValidator::class)
+    ],
+
+    \Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidator::class =>
+        \DI\autowire()
+            ->constructorParameter('transactionValidators', DI\get('transaction.validators')),
+
+
 ];

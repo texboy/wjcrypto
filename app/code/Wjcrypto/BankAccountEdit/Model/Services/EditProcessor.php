@@ -6,6 +6,7 @@
 namespace Wjcrypto\BankAccountEdit\Model\Services;
 
 use Core\Validation\ValidationException;
+use Throwable;
 use Wjcrypto\BankAccountEdit\Model\Services\EditValidator;
 
 /**
@@ -38,8 +39,10 @@ class EditProcessor
     }
 
     /**
-     * @inheritDoc
+     * @param array $requestData
+     * @return string
      * @throws ValidationException
+     * @throws Throwable
      */
     public function process(array $requestData): string
     {
