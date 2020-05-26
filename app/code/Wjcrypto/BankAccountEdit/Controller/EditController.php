@@ -5,9 +5,11 @@
 
 namespace Wjcrypto\BankAccountEdit\Controller;
 
+use Core\Model\TransactionLogger;
 use Core\Validation\ValidationException;
 use Exception;
 use Pecee\Http\Input\InputHandler;
+use Psr\Log\LogLevel;
 use Throwable;
 use Wjcrypto\BankAccountEdit\Model\Services\EditProcessor;
 
@@ -26,26 +28,39 @@ class EditController
     private $inputHandler;
 
     /**
+     * @var TransactionLogger
+     */
+    private $transactionLogger;
+
+    /**
      * EditController constructor.
      * @param EditProcessor $editProcessor
      * @param InputHandler $inputHandler
+     * @param TransactionLogger $transactionLogger
      */
-    public function __construct(EditProcessor $editProcessor, InputHandler $inputHandler)
-    {
+    public function __construct(
+        EditProcessor $editProcessor,
+        InputHandler $inputHandler,
+        TransactionLogger $transactionLogger
+    ) {
         $this->editProcessor = $editProcessor;
         $this->inputHandler = $inputHandler;
+        $this->transactionLogger = $transactionLogger;
     }
 
 
     /**
      * @return string|null
-     * @throws ValidationException
+     * @throws ValidationException|Throwable
      */
     public function editAccount(): ?string
     {
-        $this->editProcessor->process($this->inputHandler->all());
+        $requestData = $this->inputHandler->all();
+        $response = $this->editProcessor->process($requestData);
+        $logMessage = 'Account edit request info: ' . json_encode($requestData);
+        $this->transactionLogger->log(LogLevel::INFO, $logMessage);
         return response()->httpCode(200)->json(
-            ['Success!']
+            $response
         );
     }
 }

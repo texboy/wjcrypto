@@ -5,6 +5,9 @@
 
 namespace Wjcrypto\Transaction\Controller;
 
+use Core\Model\AccessLogger;
+use Pecee\Http\Request;
+use Psr\Log\LogLevel;
 use Wjcrypto\Transaction\Model\TransactionTypeRepository;
 
 /**
@@ -20,12 +23,21 @@ class Controller
     private $transactionTypeRepository;
 
     /**
+     * @var AccessLogger
+     */
+    private $accessLogger;
+
+    /**
      * Controller constructor.
      * @param TransactionTypeRepository $transactionTypeRepository
+     * @param AccessLogger $accessLogger
      */
-    public function __construct(TransactionTypeRepository $transactionTypeRepository)
-    {
+    public function __construct(
+        TransactionTypeRepository $transactionTypeRepository,
+        AccessLogger $accessLogger
+    ) {
         $this->transactionTypeRepository = $transactionTypeRepository;
+        $this->accessLogger = $accessLogger;
     }
 
 
@@ -34,8 +46,10 @@ class Controller
      */
     public function getTypes(): ?string
     {
+        $types =  $this->transactionTypeRepository->getAll()->toArray();
+        $this->accessLogger->log(LogLevel::INFO, '');
         return response()->httpCode(200)->json(
-            $this->transactionTypeRepository->getAll()->toArray()
+            $types
         );
     }
 }

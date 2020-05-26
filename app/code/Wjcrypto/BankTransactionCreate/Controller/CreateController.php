@@ -5,7 +5,9 @@
 
 namespace Wjcrypto\BankTransactionCreate\Controller;
 
+use Core\Model\TransactionLogger;
 use Pecee\Http\Input\InputHandler;
+use Psr\Log\LogLevel;
 use Throwable;
 use Wjcrypto\BankAccount\Model\BankAccountLogger;
 use Wjcrypto\BankAccountRegister\Model\Services\RegisterProcessor;
@@ -30,15 +32,26 @@ class CreateController
     private $transactionProcessor;
 
     /**
+     * @var TransactionLogger
+     */
+    private $transactionLogger;
+
+    /**
      * CreateController constructor.
      * @param InputHandler $inputHandler
      * @param TransactionProcessor $transactionProcessor
+     * @param TransactionLogger $transactionLogger
      */
-    public function __construct(InputHandler $inputHandler, TransactionProcessor $transactionProcessor)
-    {
+    public function __construct(
+        InputHandler $inputHandler,
+        TransactionProcessor $transactionProcessor,
+        TransactionLogger $transactionLogger
+    ) {
         $this->inputHandler = $inputHandler;
         $this->transactionProcessor = $transactionProcessor;
+        $this->transactionLogger = $transactionLogger;
     }
+
 
     /**
      * @return string|null
@@ -46,8 +59,12 @@ class CreateController
      */
     public function createTransaction(): ?string
     {
+        $requestData = $this->inputHandler->all();
+        $response = $this->transactionProcessor->process($requestData);
+        $logMessage = 'Transaction creation request info: ' . json_encode($requestData);
+        $this->transactionLogger->log(LogLevel::INFO, $logMessage);
         return response()->httpCode(200)->json([
-            $this->transactionProcessor->process($this->inputHandler->all()),
+            $response
         ]);
     }
 }

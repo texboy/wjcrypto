@@ -9,7 +9,7 @@ return [
         \DI\autowire()
             ->constructor(getenv('APP_KEY'), 'AES-256-CBC'),
 
-    //_________Core_____________
+    //_________Logger_____________
     'CoreStreamHandler' =>
         \DI\autowire(Monolog\Handler\StreamHandler::class)
             ->constructor(__DIR__ . '/../../var/log/core.log', Monolog\Logger::INFO),
@@ -29,6 +29,36 @@ return [
         ->constructor('error')
         ->method('pushHandler', DI\get('ErrorStreamHandler'))
         ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
+
+    'AccessStreamHandler' =>
+        \DI\autowire(Monolog\Handler\StreamHandler::class)
+            ->constructor(__DIR__ . '/../../var/log/access.log', Monolog\Logger::INFO),
+
+    \Core\Model\AccessLogger::class =>
+        \DI\autowire()
+            ->constructor('core')
+            ->method('pushHandler', DI\get('AccessStreamHandler'))
+            ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
+
+    'TransactionStreamHandler' =>
+        \DI\autowire(Monolog\Handler\StreamHandler::class)
+            ->constructor(__DIR__ . '/../../var/log/transaction.log', Monolog\Logger::INFO),
+
+    \Core\Model\TransactionLogger::class =>
+        \DI\autowire()
+            ->constructor('core')
+            ->method('pushHandler', DI\get('TransactionStreamHandler'))
+            ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
+
+    'LoginStreamHandler' =>
+        \DI\autowire(Monolog\Handler\StreamHandler::class)
+            ->constructor(__DIR__ . '/../../var/log/login.log', Monolog\Logger::INFO),
+
+    \Wjcrypto\Auth\Model\LoginLogger::class =>
+        \DI\autowire()
+            ->constructor('login')
+            ->method('pushHandler', DI\get('LoginStreamHandler'))
+            ->method('pushProcessor', DI\create(\Monolog\Processor\WebProcessor::class)),
 
     /*____________BankAccount________________*/
     'BankAccountStreamHandler' =>
@@ -75,6 +105,4 @@ return [
     \Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidator::class =>
         \DI\autowire()
             ->constructorParameter('transactionValidators', DI\get('transaction.validators')),
-
-
 ];
