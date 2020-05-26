@@ -12,5 +12,4 @@ Router::group([
         ->name('bank.transaction.show');
     Router::get('/bank/transactions', 'ShowController@getAllTransactions')
         ->name('bank.transaction.show');
-
 });

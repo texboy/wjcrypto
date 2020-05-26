@@ -44,7 +44,9 @@ class UserRepository extends BaseRepository
      */
     public function getByUsername($username, array $relationships): Model
     {
-        return $this->entity->where('username', $username)->first();
+        return $this->entity->get()->filter(function ($user) use ($username) {
+            return $user->username == $username;
+        })->first();
     }
 
     /**

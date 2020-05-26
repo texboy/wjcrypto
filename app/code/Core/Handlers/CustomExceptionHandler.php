@@ -58,7 +58,7 @@ class CustomExceptionHandler implements IExceptionHandler
                 'code' => $error->getCode(),
             ];
         } else {
-            $errorCode = 400;
+            $errorCode = $error->getCode();
             $errorMessages = [
                 'error' => $error->getMessage(),
                 'code' => $error->getCode(),

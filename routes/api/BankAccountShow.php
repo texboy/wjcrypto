@@ -16,5 +16,4 @@ Router::group([
 
     Router::get('/bank/account/{id}', 'ShowController@getAccount')
         ->name('bank.account.get.account');
-
 });
