@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Core\Traits\EncryptionTrait;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Wjcrypto\Account\Model\Account;
+use Wjcrypto\CustomerAddress\Model\CustomerAddress;
 use Wjcrypto\Document\Model\Document;
 use Wjcrypto\User\Model\User;
 
@@ -36,14 +37,14 @@ class Customer extends Model
      * @var string[]
      */
     protected $encryptable = [
-        'name'
+        'name','dof','telephone'
     ];
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'name', 'user_id','customer_type_id'
+        'name', 'dof', 'telephone','user_id','customer_type_id'
     ];
 
     /**
@@ -67,6 +68,14 @@ class Customer extends Model
     public function customerType(): BelongsTo
     {
         return $this->belongsTo(CustomerType::class, 'customer_type_id', 'customer_type_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function customerAddress(): HasMany
+    {
+        return $this->hasMany(CustomerAddress::class, 'customer_id', 'customer_id');
     }
 
     /**

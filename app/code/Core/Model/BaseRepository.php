@@ -25,7 +25,7 @@ class BaseRepository implements BaseRepositoryInterface
     {
         $entity = $this->entity::with($relationships)->find($id);
         if (is_null($entity)) {
-            throw new Exception('Entity with id = ' . $id . ' doest not exist', 400);
+            throw new Exception('Entity ' . get_class($this->entity) . ' with id = ' . $id . ' doest not exist', 400);
         }
         return $entity;
     }

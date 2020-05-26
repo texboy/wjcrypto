@@ -9,10 +9,10 @@ use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
 
 /**
- * Class UserValidator
- * @package Wjcrypto\BankAccountEdit\Model\Services\EditValidators
+ * Class AddressValidator
+ * @package Wjcrypto\BankAccountEdit\Model\Services\RegisterValidators
  */
-class UserValidator implements AccountValidatorInterface
+class AddressValidator implements AccountValidatorInterface
 {
     /**
      * @var ValidationResult
@@ -23,10 +23,12 @@ class UserValidator implements AccountValidatorInterface
      * CustomerValidator constructor.
      * @param ValidationResult $validationResult
      */
-    public function __construct(ValidationResult $validationResult)
-    {
+    public function __construct(
+        ValidationResult $validationResult
+    ) {
         $this->validationResult = $validationResult;
     }
+
 
     /**
      * @inheritDoc
@@ -34,14 +36,14 @@ class UserValidator implements AccountValidatorInterface
     public function validate(array $requestData): ValidationResult
     {
         $errors = [];
-        $contextPhrase = 'User edit error: ';
-
-        if (isset($requestData['user'])) {
-            $errors[] = $contextPhrase . 'username edit not allowed. Remove "user" key';
-        } elseif (!isset($requestData['user']['user_id'])) {
-            $errors[] = $contextPhrase . 'missing "user_id" key';
+        $contextPhrase = 'Customer address edit error: ';
+        if (isset($requestData['user']['customer']['customer_address'])) {
+            foreach ($requestData['user']['customer']['customer_address'] as $address) {
+                if (!isset($address['customer_address_id'])) {
+                    $errors[] = $contextPhrase . 'missing "customer_address_id" key';
+                }
+            }
         }
-
         $this->validationResult->setErrors($errors);
         return $this->validationResult;
     }

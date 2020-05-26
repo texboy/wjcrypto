@@ -19,6 +19,9 @@ class ApiAuth implements IMiddleware
      */
     public function handle(Request $request): void
     {
+        $header = $request->getHeader('Authorization');
+        $credentials = base64_decode($header);
+
 //        // Do authentication
 //        if (true) {
 //           $isAuthorized = false;

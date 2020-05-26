@@ -46,10 +46,11 @@ class CustomExceptionHandler implements IExceptionHandler
             $validationExceptions = $error->getErrors();
             $errorCode = 400;
             foreach ($validationExceptions as $exception) {
-                $messages[] =  [ 'error' => $exception->getMessage()];
+                $errorMessages[] =  [
+                    'error' => $exception->getMessage(),
+                    'code' => $errorCode
+                ];
             }
-            $errorMessages['validationException'] = $messages;
-            $errorMessages['code'] = $errorCode;
         } elseif ($error instanceof NotFoundHttpException) {
             $errorCode = 404;
             $errorMessages = [
@@ -69,9 +70,10 @@ class CustomExceptionHandler implements IExceptionHandler
             'code: ' => $errorCode,
             'stacktrace: ' => $error->getTraceAsString()
         ]));
-        response()->httpCode($errorCode)->json([
+
+        response()->httpCode($errorCode)->json(
             $errorMessages
-        ]);
+        );
 
         throw $error;
     }

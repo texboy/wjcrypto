@@ -8,6 +8,7 @@ namespace Wjcrypto\BankAccountEdit\Model\Services;
 use Throwable;
 use Wjcrypto\Account\Model\AccountRepository;
 use Wjcrypto\Customer\Model\CustomerRepository;
+use Wjcrypto\CustomerAddress\Model\CustomerAddressRepository;
 use Wjcrypto\Document\Model\DocumentRepository;
 use Wjcrypto\User\Model\UserRepository;
 
@@ -17,7 +18,6 @@ use Wjcrypto\User\Model\UserRepository;
  */
 class EditSave
 {
-
     /**
      * @var UserRepository
      */
@@ -29,32 +29,24 @@ class EditSave
     private $customerRepository;
 
     /**
-     * @var DocumentRepository
+     * @var CustomerAddressRepository
      */
-    private $documentRepository;
+    private $customerAddressRepository;
 
     /**
-     * @var AccountRepository
-     */
-    private $accountRepository;
-
-    /**
-     * RegisterSave constructor.
+     * EditSave constructor.
      * @param UserRepository $userRepository
      * @param CustomerRepository $customerRepository
-     * @param DocumentRepository $documentRepository
-     * @param AccountRepository $accountRepository
+     * @param CustomerAddressRepository $customerAddressRepository
      */
     public function __construct(
         UserRepository $userRepository,
         CustomerRepository $customerRepository,
-        DocumentRepository $documentRepository,
-        AccountRepository $accountRepository
+        CustomerAddressRepository $customerAddressRepository
     ) {
         $this->userRepository = $userRepository;
         $this->customerRepository = $customerRepository;
-        $this->documentRepository = $documentRepository;
-        $this->accountRepository = $accountRepository;
+        $this->customerAddressRepository = $customerAddressRepository;
     }
 
 
@@ -70,7 +62,15 @@ class EditSave
             $user = $this->userRepository->getById($accountData['user_id']);
             $this->userRepository->update($user->fill($accountData));
             $this->customerRepository->update($user->customer->fill($accountData['customer']));
+            if (isset($accountData['customer']['customer_address'])) {
+                foreach ($accountData['customer']['customer_address'] as $address) {
+                    $customerAddress = $this->customerAddressRepository->getById($address['customer_address_id']);
+                    $customerAddress->fill($address);
+                    $this->customerAddressRepository->update($customerAddress);
+                }
+            }
             return 'Success';
         });
     }
+
 }

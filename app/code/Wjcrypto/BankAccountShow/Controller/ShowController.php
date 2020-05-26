@@ -6,6 +6,7 @@
 namespace Wjcrypto\BankAccountShow\Controller;
 
 use Exception;
+use Wjcrypto\Account\Model\AccountRepository;
 use Wjcrypto\User\Model\UserRepository;
 
 /**
@@ -17,6 +18,7 @@ class ShowController
     public const BANK_USER_ACCOUNT_RELATIONSHIPS = [
         'customer.customerType',
         'customer.account',
+        'customer.customerAddress',
         'customer.document.documentType'
     ];
 
@@ -24,6 +26,10 @@ class ShowController
      * @var UserRepository
      */
     private $userRepository;
+
+    /**
+     * @var AccountRepository;
+     */
 
     /**
      * ShowController constructor.
@@ -40,7 +46,7 @@ class ShowController
      * @return string|null
      * @throws Exception
      */
-    public function getAccount($id): ?string
+    public function getUser($id): ?string
     {
         return response()->httpCode(200)->json([
             $this->userRepository
@@ -58,4 +64,18 @@ class ShowController
                 ->getAll(self::BANK_USER_ACCOUNT_RELATIONSHIPS)->toArray()
         ]);
     }
+
+    /**
+     * @param $id
+     * @return string|null
+     * @throws Exception
+     */
+    public function getAccount($id): ?string
+    {
+        return response()->httpCode(200)->json([
+            $this->userRepository
+                ->getByAccountId((int) $id, self::BANK_USER_ACCOUNT_RELATIONSHIPS)->toArray()
+        ]);
+    }
+
 }

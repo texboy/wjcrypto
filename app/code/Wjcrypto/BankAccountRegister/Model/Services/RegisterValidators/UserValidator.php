@@ -7,9 +7,10 @@ namespace Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators;
 
 use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
+use Wjcrypto\User\Model\UserRepository;
 
 /**
- * Class CustomerValidator
+ * Class UserValidator
  * @package Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators
  */
 class UserValidator implements AccountValidatorInterface
@@ -20,13 +21,23 @@ class UserValidator implements AccountValidatorInterface
     private $validationResult;
 
     /**
-     * CustomerValidator constructor.
-     * @param ValidationResult $validationResult
+     * @var UserRepository
      */
-    public function __construct(ValidationResult $validationResult)
-    {
+    private $userRepository;
+
+    /**
+     * UserValidator constructor.
+     * @param ValidationResult $validationResult
+     * @param UserRepository $userRepository
+     */
+    public function __construct(
+        ValidationResult $validationResult,
+        UserRepository $userRepository
+    ) {
         $this->validationResult = $validationResult;
+        $this->userRepository = $userRepository;
     }
+
 
     /**
      * @inheritDoc
@@ -42,6 +53,12 @@ class UserValidator implements AccountValidatorInterface
             $errors[] = $contextPhrase . 'missing "username" key';
         } elseif (!isset($requestData['user']['password'])) {
             $errors[] = $contextPhrase . 'missing "password" key';
+        }
+
+        if (isset($requestData['user']['username'])) {
+            if ($this->userRepository->usernameExists($requestData['user']['username'])) {
+                $errors[] = $contextPhrase . 'username already taken';
+            }
         }
 
         $this->validationResult->setErrors($errors);

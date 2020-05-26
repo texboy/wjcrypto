@@ -19,12 +19,21 @@ class TransactionProcessor
     private $transactionValidator;
 
     /**
+     * @var TransactionSave
+     */
+    private $transactionSave;
+
+    /**
      * TransactionProcessor constructor.
      * @param TransactionValidator $transactionValidator
+     * @param TransactionSave $transactionSave
      */
-    public function __construct(TransactionValidator $transactionValidator)
-    {
+    public function __construct(
+        TransactionValidator $transactionValidator,
+        TransactionSave $transactionSave
+    ) {
         $this->transactionValidator = $transactionValidator;
+        $this->transactionSave = $transactionSave;
     }
 
     /**
@@ -38,7 +47,6 @@ class TransactionProcessor
         if ($validationResult->isValid() === false) {
             throw new ValidationException($validationResult, "Validation Exception");
         }
-
-        return 'top';
+        return $this->transactionSave->save($requestData);
     }
 }

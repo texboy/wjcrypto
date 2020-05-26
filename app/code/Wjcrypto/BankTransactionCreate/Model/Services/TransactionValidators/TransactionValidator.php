@@ -9,8 +9,8 @@ use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
 
 /**
- * Class CustomerValidator
- * @package Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators
+ * Class TransactionValidator
+ * @package Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators
  */
 class TransactionValidator implements AccountValidatorInterface
 {

@@ -43,6 +43,10 @@ class CustomerValidator implements AccountValidatorInterface
             $errors[] =  $contextPhrase . 'missing "name" key';
         } elseif (!isset($requestData['user']['customer']['customer_type_id'])) {
             $errors[] =  $contextPhrase . 'missing "customer_type_id" key';
+        } elseif (!isset($requestData['user']['customer']['dof'])) {
+            $errors[] =  $contextPhrase . 'missing "dof" key';
+        } elseif (!isset($requestData['user']['customer']['telephone'])) {
+            $errors[] =  $contextPhrase . 'missing "telephone" key';
         }
 
         $this->validationResult->setErrors($errors);

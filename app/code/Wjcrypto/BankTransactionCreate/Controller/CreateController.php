@@ -46,11 +46,8 @@ class CreateController
      */
     public function createTransaction(): ?string
     {
-        $test = new Transaction();
-
         return response()->httpCode(200)->json([
             $this->transactionProcessor->process($this->inputHandler->all()),
-            $test->with('transactionType', 'sender.customer.user', 'receiver.customer.user')->find(1)->toArray()
         ]);
     }
 }

@@ -44,7 +44,8 @@ return [
     'register.validators' => [
         DI\get(\Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\UserValidator::class),
         DI\get(\Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\CustomerValidator::class),
-        DI\get(\Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\DocumentValidator::class)
+        DI\get(\Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\DocumentValidator::class),
+        DI\get(\Wjcrypto\BankAccountRegister\Model\Services\RegisterValidators\AddressValidator::class)
         ],
 
 
@@ -55,17 +56,20 @@ return [
     'edit.validators' => [
         DI\get(\Wjcrypto\BankAccountEdit\Model\Services\EditValidators\UserValidator::class),
         DI\get(\Wjcrypto\BankAccountEdit\Model\Services\EditValidators\CustomerValidator::class),
-        DI\get(\Wjcrypto\BankAccountEdit\Model\Services\EditValidators\DocumentValidator::class)
+        DI\get(\Wjcrypto\BankAccountEdit\Model\Services\EditValidators\DocumentValidator::class),
+        DI\get(\Wjcrypto\BankAccountEdit\Model\Services\EditValidators\AddressValidator::class)
     ],
 
     \Wjcrypto\BankAccountEdit\Model\Services\EditValidator::class =>
         \DI\autowire()
             ->constructorParameter('editValidators', DI\get('edit.validators')),
 
-    //________BankTransaction_________
-
+    /*________BankTransaction_________*/
     'transaction.validators' => [
-        DI\get(\Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators\TransactionValidator::class)
+        DI\get(\Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators\TransactionValidator::class),
+        DI\get(\Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators\TransactionTypeValidator::class),
+        DI\get(\Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators\AccountValidator::class),
+        DI\get(\Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators\AccountBalanceValidator::class)
     ],
 
     \Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidator::class =>

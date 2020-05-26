@@ -8,6 +8,7 @@ namespace Wjcrypto\BankAccountRegister\Model\Services;
 use Throwable;
 use Wjcrypto\Account\Model\AccountRepository;
 use Wjcrypto\Customer\Model\CustomerRepository;
+use Wjcrypto\CustomerAddress\Model\CustomerAddressRepository;
 use Wjcrypto\Document\Model\DocumentRepository;
 use Wjcrypto\User\Model\UserRepository;
 
@@ -39,22 +40,30 @@ class RegisterSave
     private $accountRepository;
 
     /**
+     * @var CustomerAddressRepository
+     */
+    private $customerAddressRepository;
+
+    /**
      * RegisterSave constructor.
      * @param UserRepository $userRepository
      * @param CustomerRepository $customerRepository
      * @param DocumentRepository $documentRepository
      * @param AccountRepository $accountRepository
+     * @param CustomerAddressRepository $customerAddressRepository
      */
     public function __construct(
         UserRepository $userRepository,
         CustomerRepository $customerRepository,
         DocumentRepository $documentRepository,
-        AccountRepository $accountRepository
+        AccountRepository $accountRepository,
+        CustomerAddressRepository $customerAddressRepository
     ) {
         $this->userRepository = $userRepository;
         $this->customerRepository = $customerRepository;
         $this->documentRepository = $documentRepository;
         $this->accountRepository = $accountRepository;
+        $this->customerAddressRepository = $customerAddressRepository;
     }
 
 
@@ -69,11 +78,13 @@ class RegisterSave
         $user = $accountData;
         $customer = $user['customer'];
         $documents = $customer['documents'];
+        $addresses = $customer['customer_address'];
 
-        return $databaseConnection->transaction(function () use ($user, $customer, $documents) {
+        return $databaseConnection->transaction(function () use ($user, $customer, $documents, $addresses) {
             $customer['user_id'] = $this->userRepository->save($user)->user_id;
             $customerId = $this->customerRepository->save($customer)->customer_id;
             $this->createDocument($documents, $customerId);
+            $this->createAddress($addresses, $customerId);
             $accountNumber = $this->accountRepository->save([
                 'customer_id' => $customerId,
                 'balance' => '0'
@@ -86,11 +97,19 @@ class RegisterSave
      * @param $documents
      * @param $customer_id
      */
-    private function createDocument($documents, $customer_id)
+    private function createDocument($documents, $customerId): void
     {
         foreach ($documents as $document) {
-             $document['customer_id'] = $customer_id;
+             $document['customer_id'] = $customerId;
              $this->documentRepository->save($document);
+        }
+    }
+
+    private function createAddress($addresses, $customerId): void
+    {
+        foreach ($addresses as $address) {
+            $address['customer_id'] = $customerId;
+            $this->customerAddressRepository->save($address);
         }
     }
 }
