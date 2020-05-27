@@ -44,7 +44,7 @@ class Controller
      */
     public function getTypes(): ?string
     {
-        $types =  $this->transactionTypeRepository->getAll()->toArray();
+        $types =  $this->documentTypeRepository->getAll()->toArray();
         $this->accessLogger->log(LogLevel::INFO, '');
         return response()->httpCode(200)->json(
             $types

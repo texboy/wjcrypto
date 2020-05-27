@@ -20,7 +20,6 @@ Router::group([
     Router::options("/{any}", function () {
         $response = response()->httpCode(200);
         if (isset($_SERVER['HTTP_ORIGIN'])) {
-
             $response->headers([
                 'Access-Control-Allow-Origin:' . $_SERVER['HTTP_ORIGIN'],
                 'Access-Control-Allow-Credentials: true',

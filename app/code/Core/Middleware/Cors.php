@@ -19,6 +19,10 @@ class Cors implements IMiddleware
      */
     public function handle(Request $request): void
     {
-        response()->header('Access-Control-Allow-Origin: ' . $request->getHeader('HTTP_ORIGIN'));
+        $headerValue = $request->getHeader('HTTP_ORIGIN');
+        if (is_null($request->getHeader('HTTP_ORIGIN'))) {
+            $headerValue = '*';
+        }
+        response()->header('Access-Control-Allow-Origin: ' . $headerValue);
     }
 }
