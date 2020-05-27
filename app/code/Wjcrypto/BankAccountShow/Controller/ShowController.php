@@ -58,9 +58,9 @@ class ShowController
         $response = $this->userRepository
             ->getById((int) $id, self::BANK_USER_ACCOUNT_RELATIONSHIPS)->toArray();
         $this->accessLogger->log(LogLevel::INFO, '');
-        return response()->httpCode(200)->json([
+        return response()->httpCode(200)->json(
             $response
-        ]);
+        );
     }
 
     /**
@@ -71,9 +71,9 @@ class ShowController
         $reponse = $this->userRepository
             ->getAll(self::BANK_USER_ACCOUNT_RELATIONSHIPS)->toArray();
         $this->accessLogger->log(LogLevel::INFO, '');
-        return response()->httpCode(200)->json([
+        return response()->httpCode(200)->json(
            $reponse
-        ]);
+        );
     }
 
     /**
@@ -86,9 +86,9 @@ class ShowController
         $reponse =  $this->userRepository
             ->getByAccountId((int) $id, self::BANK_USER_ACCOUNT_RELATIONSHIPS)->toArray();
         $this->accessLogger->log(LogLevel::INFO, '');
-        return response()->httpCode(200)->json([
+        return response()->httpCode(200)->json(
            $reponse
-        ]);
+        );
     }
 
 }

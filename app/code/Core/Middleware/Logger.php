@@ -11,8 +11,8 @@ use Pecee\Http\Request;
 use Core\Model\CoreLogger;
 
 /**
- * Class ApiVerification
- * @package Wjcrypto\Router\Middleware
+ * Class Logger
+ * @package Core\Middleware
  */
 class Logger implements IMiddleware
 {
