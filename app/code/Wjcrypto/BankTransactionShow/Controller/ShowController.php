@@ -64,7 +64,7 @@ class ShowController
      * @return string|null
      * @throws Exception
      */
-    public function getTransactions(): ?string
+    public function getAllTransactions(): ?string
     {
         $reponse = $this->transactionRepository->getAll(self::BANK_TRANSACTION_RELATIONSHIPS);
         $this->accessLogger->log(LogLevel::INFO, '');

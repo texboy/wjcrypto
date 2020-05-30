@@ -60,7 +60,7 @@ class EditController
         $logMessage = 'Account edit request info: ' . json_encode($requestData);
         $this->transactionLogger->log(LogLevel::INFO, $logMessage);
         return response()->httpCode(200)->json(
-            $response
+            [$response]
         );
     }
 }
