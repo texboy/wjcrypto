@@ -48,7 +48,6 @@ class TransactionValidator implements AccountValidatorInterface
         } elseif (!isset($requestData['transaction']['transaction_type_id'])) {
             $errors[] = $contextPhrase . 'missing "transaction_type_id" key';
         }
-
         $this->validationResult->setErrors($errors);
         return $this->validationResult;
     }

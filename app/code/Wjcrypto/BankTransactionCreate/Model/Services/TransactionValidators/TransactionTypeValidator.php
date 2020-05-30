@@ -8,6 +8,7 @@ namespace Wjcrypto\BankTransactionCreate\Model\Services\TransactionValidators;
 use Exception;
 use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
+use Wjcrypto\Transaction\Model\TransactionType;
 use Wjcrypto\Transaction\Model\TransactionTypeRepository;
 
 /**
@@ -49,7 +50,12 @@ class TransactionTypeValidator implements AccountValidatorInterface
         $errors = [];
         $contextPhrase = 'Transaction creation error: ';
         if (isset($requestData['transaction']['transaction_type_id'])) {
-            $this->transactionTypeRepository->getById($requestData['transaction']['transaction_type_id']);
+            $type = $this->transactionTypeRepository->getById($requestData['transaction']['transaction_type_id']);
+            if ($type->value == TransactionType::TRANSACTION_TYPE_TRANSFER) {
+                if ($requestData['transaction']['sender_account_id'] == $requestData['transaction']['receiver_account_id']) {
+                    $errors[] = $contextPhrase . 'receiver and sender are the same!';
+                }
+            }
         }
         $this->validationResult->setErrors($errors);
         return $this->validationResult;

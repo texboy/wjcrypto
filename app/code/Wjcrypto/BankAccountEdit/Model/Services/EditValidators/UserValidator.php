@@ -37,7 +37,7 @@ class UserValidator implements AccountValidatorInterface
         $contextPhrase = 'User edit error: ';
 
         if (isset($requestData['user'])) {
-            $errors[] = $contextPhrase . 'username edit not allowed. Remove "user" key';
+            $errors[] = $contextPhrase . 'username edit not allowed. Remove "username" key';
         } elseif (!isset($requestData['user']['user_id'])) {
             $errors[] = $contextPhrase . 'missing "user_id" key';
         }

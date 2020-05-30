@@ -59,12 +59,15 @@ class AccountBalanceValidator implements AccountValidatorInterface
         $errors = [];
         $contextPhrase = 'Transaction creation error: ';
 
-        if (isset($requestData['transaction']['sender_account_id']) && !$this->isDeposit($requestData)) {
-            $sender = $this->accountRepository->getById($requestData['transaction']['sender_account_id']);
-            if ((float) $sender->balance < (float) $requestData['transaction']['amount']) {
-                $errors[] = $contextPhrase . 'sender has an insufficient balance value';
+        if(isset($requestData['transaction']['transaction_type_id'])){
+            if (isset($requestData['transaction']['sender_account_id']) && !$this->isDeposit($requestData)) {
+                $sender = $this->accountRepository->getById($requestData['transaction']['sender_account_id']);
+                if ((float) $sender->balance < (float) $requestData['transaction']['amount']) {
+                    $errors[] = $contextPhrase . 'sender has an insufficient balance value';
+                }
             }
         }
+
         $this->validationResult->setErrors($errors);
         return $this->validationResult;
     }

@@ -9,6 +9,7 @@ use Exception;
 use Wjcrypto\Account\Model\AccountRepository;
 use Wjcrypto\BankAccountRegister\Model\Services\AccountValidatorInterface;
 use Core\Validation\ValidationResult;
+use Wjcrypto\Transaction\Model\TransactionType;
 
 /**
  * Class AccountValidator
@@ -54,6 +55,7 @@ class AccountValidator implements AccountValidatorInterface
         if (isset($requestData['transaction']['receiver_account_id'])) {
             $this->accountRepository->getById($requestData['transaction']['receiver_account_id']);
         }
+
         $this->validationResult->setErrors($errors);
         return $this->validationResult;
     }
